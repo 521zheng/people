@@ -1,11 +1,11 @@
 package org.leesia.resource.controller;
 
-import org.leesia.resource.redis.RedisService;
+import org.leesia.dataio.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: leesia
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TestController {
 
     @Autowired
-    RedisService redisService;
+    private RedisService redisService;
 
     @RequestMapping(value = "reversal", method = RequestMethod.GET)
     @ResponseBody
@@ -29,7 +29,7 @@ public class TestController {
         String v = redisService.getString(param);
         if (v == null) {
             String rev =  new StringBuilder(param).reverse().toString();
-            redisService.setString(param, rev);
+            redisService.setString(param, rev, 60, TimeUnit.SECONDS);
             return rev;
         }
         return v;
@@ -44,5 +44,11 @@ public class TestController {
             return true;
         }
         return false;
+    }
+
+    @RequestMapping(value = "test", method = RequestMethod.GET)
+    @ResponseBody
+    public Object test(HttpServletRequest request, @RequestParam String param) {
+        return param;
     }
 }
