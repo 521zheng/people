@@ -1,6 +1,7 @@
 package org.leesia.resource;
 
 import org.leesia.resource.res.HanziResource;
+import org.leesia.resource.res.NationDistributionResource;
 import org.leesia.resource.res.NationResource;
 import org.leesia.resource.util.*;
 import org.mybatis.spring.annotation.MapperScan;
@@ -26,7 +27,7 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         SpringUtil.setApplicationContext(ctx);
 
-//        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
-//        hanziResource.insertAllHanzi();
+//        NationDistributionResource nationDistributionResource = (NationDistributionResource) SpringUtil.getBean("nationDistributionResource");
+//        nationDistributionResource.insertAllNationDistribution();
     }
 }

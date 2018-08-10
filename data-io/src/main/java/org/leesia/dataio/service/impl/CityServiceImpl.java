@@ -1,6 +1,7 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.CityMapper;
 import org.leesia.dataio.dao.ext.ExtCityMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
@@ -8,7 +9,7 @@ import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.CityService;
 import org.leesia.entity.City;
 import org.leesia.entity.CityCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(City city) {
         logger.info("增加城市：{}", city.getCityName());
         if (StringUtils.isBlank(city.getId())) {
-            city.setId(UUIDTools.uuid());
+            city.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(city);
-        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, redisConfig.getCityExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -60,7 +64,7 @@ public class CityServiceImpl implements CityService {
         }
         for (City city : cities) {
             if (StringUtils.isBlank(city.getId())) {
-                city.setId(UUIDTools.uuid());
+                city.setId(UUIDTool.uuid());
             }
             if (city.getCreateDatetime() == null) {
                 city.setCreateDatetime(new Date());
@@ -91,7 +95,7 @@ public class CityServiceImpl implements CityService {
 
             if (cities != null && !cities.isEmpty()) {
                 city = cities.get(0);
-                redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + cityName, city, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + cityName, city, redisConfig.getCityExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -119,7 +123,7 @@ public class CityServiceImpl implements CityService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(city);
-        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, redisConfig.getCityExpire(), TimeUnit.SECONDS);
 
         return update;
     }

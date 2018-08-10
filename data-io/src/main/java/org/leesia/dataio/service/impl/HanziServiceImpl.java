@@ -1,6 +1,7 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.HanziMapper;
 import org.leesia.dataio.dao.ext.ExtHanziMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
@@ -8,7 +9,7 @@ import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.HanziService;
 import org.leesia.entity.Hanzi;
 import org.leesia.entity.HanziCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class HanziServiceImpl implements HanziService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(Hanzi hanzi) {
         logger.info("增加常用汉字：{}", hanzi.getHanzi());
         if (StringUtils.isBlank(hanzi.getId())) {
-            hanzi.setId(UUIDTools.uuid());
+            hanzi.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(hanzi);
-        redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanzi.getHanzi(), hanzi, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanzi.getHanzi(), hanzi, redisConfig.getHanziExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -60,7 +64,7 @@ public class HanziServiceImpl implements HanziService {
         }
         for (Hanzi hanzi : hanzis) {
             if (StringUtils.isBlank(hanzi.getId())) {
-                hanzi.setId(UUIDTools.uuid());
+                hanzi.setId(UUIDTool.uuid());
             }
             if (hanzi.getCreateDatetime() == null) {
                 hanzi.setCreateDatetime(new Date());
@@ -91,7 +95,7 @@ public class HanziServiceImpl implements HanziService {
 
             if (hanzis != null && !hanzis.isEmpty()) {
                 hanzi = hanzis.get(0);
-                redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanziName, hanzi, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanziName, hanzi, redisConfig.getHanziExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -119,7 +123,7 @@ public class HanziServiceImpl implements HanziService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(hanzi);
-        redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanzi.getHanzi(), hanzi, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.HanziPrefix.getPrefix() + hanzi.getHanzi(), hanzi, redisConfig.getHanziExpire(), TimeUnit.SECONDS);
 
         return update;
     }

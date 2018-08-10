@@ -16,18 +16,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Beans {
 
-    @Bean
-    public ProvinceService provinceService() {
-        return new ProvinceServiceImpl();
-    }
-
-    @Bean
-    public CityService cityService() {
-        return new CityServiceImpl();
-    }
-
-    @Bean
-    public RedisService redisService() {
-        return new RedisService();
-    }
+//    @Bean
+//    public ProvinceService provinceService() {
+//        return new ProvinceServiceImpl();
+//    }
+//
+//    @Bean
+//    public CityService cityService() {
+//        return new CityServiceImpl();
+//    }
+//
+//    @Bean
+//    public RedisService redisService() {
+//        return new RedisService();
+//    }
 }

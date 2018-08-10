@@ -1,6 +1,7 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtNationMapper;
 import org.leesia.dataio.dao.NationMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
@@ -8,7 +9,7 @@ import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.NationService;
 import org.leesia.entity.Nation;
 import org.leesia.entity.NationCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class NationServiceImpl implements NationService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(Nation nation) {
         logger.info("增加民族：{}", nation.getNationName());
         if (StringUtils.isBlank(nation.getId())) {
-            nation.setId(UUIDTools.uuid());
+            nation.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(nation);
-        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -60,7 +64,7 @@ public class NationServiceImpl implements NationService {
         }
         for (Nation nation : nations) {
             if (StringUtils.isBlank(nation.getId())) {
-                nation.setId(UUIDTools.uuid());
+                nation.setId(UUIDTool.uuid());
             }
             if (nation.getCreateDatetime() == null) {
                 nation.setCreateDatetime(new Date());
@@ -91,7 +95,7 @@ public class NationServiceImpl implements NationService {
 
             if (nations != null && !nations.isEmpty()) {
                 nation = nations.get(0);
-                redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nationName, nation, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nationName, nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -119,7 +123,7 @@ public class NationServiceImpl implements NationService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(nation);
-        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
 
         return update;
     }

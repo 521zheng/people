@@ -1,15 +1,15 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.NationDistributionMapper;
 import org.leesia.dataio.dao.ext.ExtNationDistributionMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
 import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.NationDistributionService;
-import org.leesia.entity.Nation;
 import org.leesia.entity.NationDistribution;
 import org.leesia.entity.NationDistributionCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +40,17 @@ public class NationDistributionServiceImpl implements NationDistributionService 
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(NationDistribution distribution) {
         logger.info("增加民族人口分布：{}", distribution.getNationName());
         if (StringUtils.isBlank(distribution.getId())) {
-            distribution.setId(UUIDTools.uuid());
+            distribution.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(distribution);
-        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -61,7 +64,7 @@ public class NationDistributionServiceImpl implements NationDistributionService 
         }
         for (NationDistribution distribution : distributions) {
             if (StringUtils.isBlank(distribution.getId())) {
-                distribution.setId(UUIDTools.uuid());
+                distribution.setId(UUIDTool.uuid());
             }
             if (distribution.getCreateDatetime() == null) {
                 distribution.setCreateDatetime(new Date());
@@ -92,7 +95,7 @@ public class NationDistributionServiceImpl implements NationDistributionService 
 
             if (distributions != null && !distributions.isEmpty()) {
                 distribution = distributions.get(0);
-                redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + nationName, distribution, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + nationName, distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -120,7 +123,7 @@ public class NationDistributionServiceImpl implements NationDistributionService 
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(distribution);
-        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
 
         return update;
     }

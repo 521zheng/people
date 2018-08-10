@@ -1,6 +1,7 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtLastNameMapper;
 import org.leesia.dataio.dao.LastNameMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
@@ -8,7 +9,7 @@ import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.LastNameService;
 import org.leesia.entity.LastName;
 import org.leesia.entity.LastNameCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class LastNameServiceImpl implements LastNameService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(LastName lastName) {
         logger.info("增加姓氏：{}", lastName.getLastName());
         if (StringUtils.isBlank(lastName.getId())) {
-            lastName.setId(UUIDTools.uuid());
+            lastName.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(lastName);
-        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -60,7 +64,7 @@ public class LastNameServiceImpl implements LastNameService {
         }
         for (LastName lastName : lastNames) {
             if (StringUtils.isBlank(lastName.getId())) {
-                lastName.setId(UUIDTools.uuid());
+                lastName.setId(UUIDTool.uuid());
             }
             if (lastName.getCreateDatetime() == null) {
                 lastName.setCreateDatetime(new Date());
@@ -91,7 +95,7 @@ public class LastNameServiceImpl implements LastNameService {
 
             if (lastNames != null && !lastNames.isEmpty()) {
                 ln = lastNames.get(0);
-                redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName, ln, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName, ln, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -119,12 +123,12 @@ public class LastNameServiceImpl implements LastNameService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(lastName);
-        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
 
         return update;
     }
 
-    private LastNameCriteria createCriteria(Map<String,Object> params) {
+    private LastNameCriteria createCriteria(Map<String, Object> params) {
         LastNameCriteria criteria = new LastNameCriteria();
         LastNameCriteria.Criteria c = criteria.createCriteria();
 

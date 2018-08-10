@@ -1,6 +1,7 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtProvinceMapper;
 import org.leesia.dataio.dao.ProvinceMapper;
 import org.leesia.dataio.redis.RedisKeyPrefix;
@@ -8,7 +9,7 @@ import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.ProvinceService;
 import org.leesia.entity.Province;
 import org.leesia.entity.ProvinceCriteria;
-import org.leesia.util.UUIDTools;
+import org.leesia.util.UUIDTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public int insert(Province province) {
         logger.info("增加省份：{}", province.getProvinceName());
         if (StringUtils.isBlank(province.getId())) {
-            province.setId(UUIDTools.uuid());
+            province.setId(UUIDTool.uuid());
         }
         int insert = mapper.insertSelective(province);
-        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
 
         return insert;
     }
@@ -60,7 +64,7 @@ public class ProvinceServiceImpl implements ProvinceService {
         }
         for (Province province : provinces) {
             if (StringUtils.isBlank(province.getId())) {
-                province.setId(UUIDTools.uuid());
+                province.setId(UUIDTool.uuid());
             }
             if (province.getCreateDatetime() == null) {
                 province.setCreateDatetime(new Date());
@@ -91,7 +95,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 
             if (provinces != null && !provinces.isEmpty()) {
                 province = provinces.get(0);
-                redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName, province, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName, province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
             }
         }
 
@@ -119,7 +123,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(province);
-        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
 
         return update;
     }
