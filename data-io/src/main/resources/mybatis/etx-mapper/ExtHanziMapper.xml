@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.leesia.dataio.dao.ext.ExtCityMapper">
-    <resultMap id="BaseResultMap" type="org.leesia.entity.City">
+<mapper namespace="org.leesia.dataio.dao.ext.ExtHanziMapper">
+    <resultMap id="BaseResultMap" type="org.leesia.entity.Hanzi">
         <id column="ID" jdbcType="CHAR" property="id"/>
-        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
-        <result column="PROVINCE" jdbcType="CHAR" property="province"/>
-        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="HANZI" jdbcType="CHAR" property="hanzi"/>
         <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
         <result column="UPDATE_DATETIME" jdbcType="TIMESTAMP" property="updateDatetime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        ID, HANZI, CREATE_DATETIME, UPDATE_DATETIME
     </sql>
 
     <insert id="bacthInsert">
-        insert into CITY (
-            ID, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        insert into COMMON_HANZI (
+            ID, HANZI, CREATE_DATETIME, UPDATE_DATETIME
         )
         values
         <foreach collection="list" item="data" separator=",">
             (
                 #{data.id,jdbcType=CHAR},
-                #{data.cityName,jdbcType=VARCHAR},
-                #{data.province,jdbcType=CHAR},
-                #{data.provinceName,jdbcType=VARCHAR},
+                #{data.hanzi,jdbcType=CHAR},
                 #{data.createDatetime,jdbcType=TIMESTAMP},
                 #{data.updateDatetime,jdbcType=TIMESTAMP}
             )

@@ -34,6 +34,7 @@
         <javaModelGenerator targetPackage="org.leesia.entity"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
+            <property name="rootInterface" value="java.io.Serializable" />
         </javaModelGenerator>
 
         <!-- 生成maper.xml文件 -->
@@ -45,7 +46,11 @@
                              targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!-- 配置表信息,不生成帮助类examples-->
-        <table tableName="PROVINCE" domainObjectName="Province"/>
+        <!--<table tableName="PROVINCE" domainObjectName="Province"/>-->
         <!--<table tableName="CITY" domainObjectName="City"/>-->
+        <!--<table tableName="LAST_NAME" domainObjectName="LastName"/>-->
+        <!--<table tableName="NATION" domainObjectName="Nation"/>-->
+        <!--<table tableName="COMMON_HANZI" domainObjectName="Hanzi"/>-->
+        <table tableName="NATION_DISTRIBUTION" domainObjectName="NationDistribution"/>
     </context>
 </generatorConfiguration>

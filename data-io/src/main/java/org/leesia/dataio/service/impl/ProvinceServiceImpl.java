@@ -1,8 +1,9 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.leesia.dataio.dao.ExtProvinceMapper;
+import org.leesia.dataio.dao.ext.ExtProvinceMapper;
 import org.leesia.dataio.dao.ProvinceMapper;
+import org.leesia.dataio.redis.RedisKeyPrefix;
 import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.ProvinceService;
 import org.leesia.entity.Province;
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2018/8/8 09:02
  * @Description:
  */
-@Service
+@Service("provinceService")
 public class ProvinceServiceImpl implements ProvinceService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProvinceServiceImpl.class);
@@ -36,7 +37,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     private ExtProvinceMapper extMapper;
 
     @Autowired
-    RedisService redisService;
+    private RedisService redisService;
 
     @Override
     public int insert(Province province) {
@@ -45,7 +46,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             province.setId(UUIDTools.uuid());
         }
         int insert = mapper.insertSelective(province);
-        redisService.setObject(province.getProvinceName(), province, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, 60, TimeUnit.SECONDS);
 
         return insert;
     }
@@ -81,16 +82,16 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public Province getByName(String provinceName) {
         logger.info("查询省份：{}", provinceName);
-        Province province = (Province) redisService.getObject(provinceName);
+        Province province = (Province) redisService.getObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName);
         if (province == null) {
             Map<String, Object> params = new HashMap<>();
-            params.put("cityName", "cityName");
+            params.put("provinceName", provinceName);
             ProvinceCriteria criteria = createCriteria(params);
             List<Province> provinces = mapper.selectByExample(criteria);
 
             if (provinces != null && !provinces.isEmpty()) {
                 province = provinces.get(0);
-                redisService.setObject(provinceName, province, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName, province, 60, TimeUnit.SECONDS);
             }
         }
 
@@ -105,7 +106,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             return 0;
         }
         int delete = mapper.deleteByPrimaryKey(province.getId());
-        redisService.deleteObject(province.getProvinceName());
+        redisService.deleteObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName());
 
         return delete;
     }
@@ -118,7 +119,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(province);
-        redisService.setObject(province.getProvinceName(), province, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, 60, TimeUnit.SECONDS);
 
         return update;
     }

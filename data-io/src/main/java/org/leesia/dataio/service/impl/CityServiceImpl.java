@@ -2,13 +2,12 @@ package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.leesia.dataio.dao.CityMapper;
-import org.leesia.dataio.dao.ExtCityMapper;
+import org.leesia.dataio.dao.ext.ExtCityMapper;
+import org.leesia.dataio.redis.RedisKeyPrefix;
 import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.CityService;
 import org.leesia.entity.City;
 import org.leesia.entity.CityCriteria;
-import org.leesia.entity.Province;
-import org.leesia.entity.ProvinceCriteria;
 import org.leesia.util.UUIDTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2018/8/8 08:58
  * @Description:
  */
-@Service
+@Service("cityService")
 public class CityServiceImpl implements CityService {
 
     private static final Logger logger = LoggerFactory.getLogger(CityServiceImpl.class);
@@ -38,7 +37,7 @@ public class CityServiceImpl implements CityService {
     private ExtCityMapper extMapper;
 
     @Autowired
-    RedisService redisService;
+    private RedisService redisService;
 
     @Override
     public int insert(City city) {
@@ -47,7 +46,7 @@ public class CityServiceImpl implements CityService {
             city.setId(UUIDTools.uuid());
         }
         int insert = mapper.insertSelective(city);
-        redisService.setObject(city.getCityName(), city, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, 60, TimeUnit.SECONDS);
 
         return insert;
     }
@@ -83,16 +82,16 @@ public class CityServiceImpl implements CityService {
     @Override
     public City getByName(String cityName) {
         logger.info("查询城市：{}", cityName);
-        City city = (City) redisService.getObject(cityName);
+        City city = (City) redisService.getObject(RedisKeyPrefix.CityPrefix.getPrefix() + cityName);
         if (city == null) {
             Map<String, Object> params = new HashMap<>();
-            params.put("cityName", "cityName");
+            params.put("cityName", cityName);
             CityCriteria criteria = createCriteria(params);
             List<City> cities = mapper.selectByExample(criteria);
 
             if (cities != null && !cities.isEmpty()) {
                 city = cities.get(0);
-                redisService.setObject(cityName, city, 60, TimeUnit.SECONDS);
+                redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + cityName, city, 60, TimeUnit.SECONDS);
             }
         }
 
@@ -107,7 +106,7 @@ public class CityServiceImpl implements CityService {
             return 0;
         }
         int delete = mapper.deleteByPrimaryKey(city.getId());
-        redisService.deleteObject(city.getCityName());
+        redisService.deleteObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName());
 
         return delete;
     }
@@ -120,7 +119,7 @@ public class CityServiceImpl implements CityService {
             return 0;
         }
         int update = mapper.updateByPrimaryKeySelective(city);
-        redisService.setObject(city.getCityName(), city, 60, TimeUnit.SECONDS);
+        redisService.setObject(RedisKeyPrefix.CityPrefix.getPrefix() + city.getCityName(), city, 60, TimeUnit.SECONDS);
 
         return update;
     }
