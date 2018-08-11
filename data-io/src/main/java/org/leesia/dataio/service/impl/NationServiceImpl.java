@@ -1,11 +1,8 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtNationMapper;
 import org.leesia.dataio.dao.NationMapper;
-import org.leesia.dataio.redis.RedisKeyPrefix;
-import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.NationService;
 import org.leesia.entity.Nation;
 import org.leesia.entity.NationCriteria;
@@ -19,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: leesia
@@ -37,22 +33,13 @@ public class NationServiceImpl implements NationService {
     @Autowired
     private ExtNationMapper extMapper;
 
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private RedisConfig redisConfig;
-
     @Override
     public int insert(Nation nation) {
         logger.info("增加民族：{}", nation.getNationName());
         if (StringUtils.isBlank(nation.getId())) {
             nation.setId(UUIDTool.uuid());
         }
-        int insert = mapper.insertSelective(nation);
-        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
-
-        return insert;
+        return mapper.insertSelective(nation);
     }
 
     @Override
@@ -86,20 +73,15 @@ public class NationServiceImpl implements NationService {
     @Override
     public Nation getByName(String nationName) {
         logger.info("查询民族：{}", nationName);
-        Nation nation = (Nation) redisService.getObject(RedisKeyPrefix.NationPrefix.getPrefix() + nationName);
-        if (nation == null) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("nationName", nationName);
-            NationCriteria criteria = createCriteria(params);
-            List<Nation> nations = mapper.selectByExample(criteria);
+        Map<String, Object> params = new HashMap<>();
+        params.put("nationName", nationName);
+        NationCriteria criteria = createCriteria(params);
+        List<Nation> nations = mapper.selectByExample(criteria);
 
-            if (nations != null && !nations.isEmpty()) {
-                nation = nations.get(0);
-                redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nationName, nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
-            }
+        if (nations != null && !nations.isEmpty()) {
+            return nations.get(0);
         }
-
-        return nation;
+        return null;
     }
 
     @Override
@@ -109,10 +91,7 @@ public class NationServiceImpl implements NationService {
             logger.error("删除民族失败，主键为空");
             return 0;
         }
-        int delete = mapper.deleteByPrimaryKey(nation.getId());
-        redisService.deleteObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName());
-
-        return delete;
+        return mapper.deleteByPrimaryKey(nation.getId());
     }
 
     @Override
@@ -122,10 +101,7 @@ public class NationServiceImpl implements NationService {
             logger.error("更新民族失败，主键为空");
             return 0;
         }
-        int update = mapper.updateByPrimaryKeySelective(nation);
-        redisService.setObject(RedisKeyPrefix.NationPrefix.getPrefix() + nation.getNationName(), nation, redisConfig.getNationExpire(), TimeUnit.SECONDS);
-
-        return update;
+        return mapper.updateByPrimaryKeySelective(nation);
     }
 
     private NationCriteria createCriteria(Map<String, Object> params) {

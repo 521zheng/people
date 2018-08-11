@@ -37,22 +37,13 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Autowired
     private ExtProvinceMapper extMapper;
 
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private RedisConfig redisConfig;
-
     @Override
     public int insert(Province province) {
         logger.info("增加省份：{}", province.getProvinceName());
         if (StringUtils.isBlank(province.getId())) {
             province.setId(UUIDTool.uuid());
         }
-        int insert = mapper.insertSelective(province);
-        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
-
-        return insert;
+        return mapper.insertSelective(province);
     }
 
     @Override
@@ -86,20 +77,15 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public Province getByName(String provinceName) {
         logger.info("查询省份：{}", provinceName);
-        Province province = (Province) redisService.getObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName);
-        if (province == null) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("provinceName", provinceName);
-            ProvinceCriteria criteria = createCriteria(params);
-            List<Province> provinces = mapper.selectByExample(criteria);
+        Map<String, Object> params = new HashMap<>();
+        params.put("provinceName", provinceName);
+        ProvinceCriteria criteria = createCriteria(params);
+        List<Province> provinces = mapper.selectByExample(criteria);
 
-            if (provinces != null && !provinces.isEmpty()) {
-                province = provinces.get(0);
-                redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + provinceName, province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
-            }
+        if (provinces != null && !provinces.isEmpty()) {
+            return provinces.get(0);
         }
-
-        return province;
+        return null;
     }
 
     @Override
@@ -109,10 +95,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             logger.error("删除省份失败，主键为空");
             return 0;
         }
-        int delete = mapper.deleteByPrimaryKey(province.getId());
-        redisService.deleteObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName());
-
-        return delete;
+        return mapper.deleteByPrimaryKey(province.getId());
     }
 
     @Override
@@ -122,10 +105,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             logger.error("更新省份失败，主键为空");
             return 0;
         }
-        int update = mapper.updateByPrimaryKeySelective(province);
-        redisService.setObject(RedisKeyPrefix.ProvincePrefix.getPrefix() + province.getProvinceName(), province, redisConfig.getProvinceExpire(), TimeUnit.SECONDS);
-
-        return update;
+        return mapper.updateByPrimaryKeySelective(province);
     }
 
     private ProvinceCriteria createCriteria(Map<String, Object> params) {

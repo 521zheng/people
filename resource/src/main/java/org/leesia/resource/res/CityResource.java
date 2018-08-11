@@ -365,10 +365,17 @@ public class CityResource {
     }
 
     private List<City> createAllCities() {
+        List<Province> provinces = provinceService.get(new HashMap<>());
+        Map<String, Province> provinceMap = new HashMap<>();
+        for (Province province : provinces) {
+            provinceMap.put(province.getProvinceName(), province);
+        }
         List<City> cities = new ArrayList<>();
         for (Map.Entry<String, String> entry : CITIES.entrySet()) {
             City city = new City();
             city.setCityName(entry.getKey());
+            Province province = provinceMap.get(entry.getValue());
+
             city.setProvinceName(entry.getValue());
 
             cities.add(city);

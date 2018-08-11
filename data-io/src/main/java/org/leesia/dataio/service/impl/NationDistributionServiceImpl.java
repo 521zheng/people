@@ -1,11 +1,8 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.NationDistributionMapper;
 import org.leesia.dataio.dao.ext.ExtNationDistributionMapper;
-import org.leesia.dataio.redis.RedisKeyPrefix;
-import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.NationDistributionService;
 import org.leesia.entity.NationDistribution;
 import org.leesia.entity.NationDistributionCriteria;
@@ -19,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: leesia
@@ -37,22 +33,13 @@ public class NationDistributionServiceImpl implements NationDistributionService 
     @Autowired
     private ExtNationDistributionMapper extMapper;
 
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private RedisConfig redisConfig;
-
     @Override
     public int insert(NationDistribution distribution) {
         logger.info("增加民族人口分布：{}", distribution.getNationName());
         if (StringUtils.isBlank(distribution.getId())) {
             distribution.setId(UUIDTool.uuid());
         }
-        int insert = mapper.insertSelective(distribution);
-        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
-
-        return insert;
+        return mapper.insertSelective(distribution);
     }
 
     @Override
@@ -86,20 +73,15 @@ public class NationDistributionServiceImpl implements NationDistributionService 
     @Override
     public NationDistribution getByNation(String nationName) {
         logger.info("查询民族人口分布：{}", nationName);
-        NationDistribution distribution = (NationDistribution) redisService.getObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + nationName);
-        if (distribution == null) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("nationName", nationName);
-            NationDistributionCriteria criteria = createCriteria(params);
-            List<NationDistribution> distributions = mapper.selectByExample(criteria);
+        Map<String, Object> params = new HashMap<>();
+        params.put("nationName", nationName);
+        NationDistributionCriteria criteria = createCriteria(params);
+        List<NationDistribution> distributions = mapper.selectByExample(criteria);
 
-            if (distributions != null && !distributions.isEmpty()) {
-                distribution = distributions.get(0);
-                redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + nationName, distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
-            }
+        if (distributions != null && !distributions.isEmpty()) {
+            return distributions.get(0);
         }
-
-        return distribution;
+        return null;
     }
 
     @Override
@@ -109,10 +91,7 @@ public class NationDistributionServiceImpl implements NationDistributionService 
             logger.error("删除民族人口分布失败，主键为空");
             return 0;
         }
-        int delete = mapper.deleteByPrimaryKey(distribution.getId());
-        redisService.deleteObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName());
-
-        return delete;
+        return mapper.deleteByPrimaryKey(distribution.getId());
     }
 
     @Override
@@ -122,10 +101,7 @@ public class NationDistributionServiceImpl implements NationDistributionService 
             logger.error("更新民族人口分布失败，主键为空");
             return 0;
         }
-        int update = mapper.updateByPrimaryKeySelective(distribution);
-        redisService.setObject(RedisKeyPrefix.NationDistributionPrefix.getPrefix() + distribution.getNationName(), distribution, redisConfig.getNationDistributionExpire(), TimeUnit.SECONDS);
-
-        return update;
+        return mapper.updateByPrimaryKeySelective(distribution);
     }
 
     private NationDistributionCriteria createCriteria(Map<String, Object> params) {

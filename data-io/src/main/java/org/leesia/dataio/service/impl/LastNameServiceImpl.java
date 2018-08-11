@@ -1,11 +1,8 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtLastNameMapper;
 import org.leesia.dataio.dao.LastNameMapper;
-import org.leesia.dataio.redis.RedisKeyPrefix;
-import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.LastNameService;
 import org.leesia.entity.LastName;
 import org.leesia.entity.LastNameCriteria;
@@ -19,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: leesia
@@ -37,22 +33,13 @@ public class LastNameServiceImpl implements LastNameService {
     @Autowired
     private ExtLastNameMapper extMapper;
 
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private RedisConfig redisConfig;
-
     @Override
     public int insert(LastName lastName) {
         logger.info("增加姓氏：{}", lastName.getLastName());
         if (StringUtils.isBlank(lastName.getId())) {
             lastName.setId(UUIDTool.uuid());
         }
-        int insert = mapper.insertSelective(lastName);
-        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
-
-        return insert;
+        return mapper.insertSelective(lastName);
     }
 
     @Override
@@ -86,20 +73,15 @@ public class LastNameServiceImpl implements LastNameService {
     @Override
     public LastName getByName(String lastName) {
         logger.info("查询姓氏：{}", lastName);
-        LastName ln = (LastName) redisService.getObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName);
-        if (ln == null) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("lastName", lastName);
-            LastNameCriteria criteria = createCriteria(params);
-            List<LastName> lastNames = mapper.selectByExample(criteria);
+        Map<String, Object> params = new HashMap<>();
+        params.put("lastName", lastName);
+        LastNameCriteria criteria = createCriteria(params);
+        List<LastName> lastNames = mapper.selectByExample(criteria);
 
-            if (lastNames != null && !lastNames.isEmpty()) {
-                ln = lastNames.get(0);
-                redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName, ln, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
-            }
+        if (lastNames != null && !lastNames.isEmpty()) {
+            return lastNames.get(0);
         }
-
-        return ln;
+        return null;
     }
 
     @Override
@@ -109,10 +91,7 @@ public class LastNameServiceImpl implements LastNameService {
             logger.error("删除姓氏失败，主键为空");
             return 0;
         }
-        int delete = mapper.deleteByPrimaryKey(lastName.getId());
-        redisService.deleteObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName());
-
-        return delete;
+        return mapper.deleteByPrimaryKey(lastName.getId());
     }
 
     @Override
@@ -122,10 +101,7 @@ public class LastNameServiceImpl implements LastNameService {
             logger.error("更新姓氏失败，主键为空");
             return 0;
         }
-        int update = mapper.updateByPrimaryKeySelective(lastName);
-        redisService.setObject(RedisKeyPrefix.LastNamePrefix.getPrefix() + lastName.getLastName(), lastName, redisConfig.getLastNameExpire(), TimeUnit.SECONDS);
-
-        return update;
+        return mapper.updateByPrimaryKeySelective(lastName);
     }
 
     private LastNameCriteria createCriteria(Map<String, Object> params) {
