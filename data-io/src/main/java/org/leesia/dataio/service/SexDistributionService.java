@@ -17,7 +17,7 @@ public interface SexDistributionService {
 
     List<SexDistribution> get(Map<String, Object> params);
 
-    SexDistribution getBySex(Sex sex);
+    SexDistribution getBySex(int sex);
 
     int delete(SexDistribution distribution);
 

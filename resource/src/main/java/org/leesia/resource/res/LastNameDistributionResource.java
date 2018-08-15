@@ -137,9 +137,15 @@ public class LastNameDistributionResource {
 
     private List<LastNameDistribution> createAllLastNameDistribution() throws Exception {
         List<LastNameDistribution> distributions = new ArrayList<>();
+        List<LastName> lastNames = lastNameService.get(new HashMap<>());
+        Map<String, LastName> lastNameMap = new HashMap<>();
+        for (LastName lastName : lastNames) {
+            lastNameMap.put(lastName.getLastName(), lastName);
+        }
+
         for (Map.Entry<String, Double> entry : LAST_NAME_DISTRIBUTION.entrySet()) {
             LastNameDistribution distribution = new LastNameDistribution();
-            LastName lastName = lastNameService.getByName(entry.getKey());
+            LastName lastName = lastNameMap.get(entry.getKey());
             if (lastName != null) {
                 distribution.setLastName(lastName.getLastName());
                 distribution.setDistribution(entry.getValue());

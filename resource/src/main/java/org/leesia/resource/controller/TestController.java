@@ -1,6 +1,6 @@
 package org.leesia.resource.controller;
 
-import org.leesia.dataio.redis.RedisService;
+import org.leesia.resource.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -46,10 +46,10 @@ public class SexDistributionServiceImpl implements SexDistributionService {
     }
 
     @Override
-    public SexDistribution getBySex(Sex sex) {
-        logger.info("查询性别分布：{}", sex.getDesc());
+    public SexDistribution getBySex(int sex) {
+        logger.info("查询性别分布：{}", sex);
         Map<String, Object> params = new HashMap<>();
-        params.put("sex", sex.getSex());
+        params.put("sex", sex);
         SexDistributionCriteria criteria = createCriteria(params);
         List<SexDistribution> provinces = mapper.selectByExample(criteria);
 

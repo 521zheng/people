@@ -1,11 +1,8 @@
 package org.leesia.dataio.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.leesia.dataio.config.RedisConfig;
 import org.leesia.dataio.dao.ext.ExtProvinceMapper;
 import org.leesia.dataio.dao.ProvinceMapper;
-import org.leesia.dataio.redis.RedisKeyPrefix;
-import org.leesia.dataio.redis.RedisService;
 import org.leesia.dataio.service.ProvinceService;
 import org.leesia.entity.Province;
 import org.leesia.entity.ProvinceCriteria;
@@ -19,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: leesia
