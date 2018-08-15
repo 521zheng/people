@@ -51,6 +51,9 @@
         <!--<table tableName="LAST_NAME" domainObjectName="LastName"/>-->
         <!--<table tableName="NATION" domainObjectName="Nation"/>-->
         <!--<table tableName="COMMON_HANZI" domainObjectName="Hanzi"/>-->
-        <table tableName="NATION_DISTRIBUTION" domainObjectName="NationDistribution"/>
+        <!--<table tableName="NATION_DISTRIBUTION" domainObjectName="NationDistribution"/>-->
+        <!--<table tableName="SEX_DISTRIBUTION" domainObjectName="SexDistribution"/>-->
+        <!--<table tableName="AGE_DISTRIBUTION" domainObjectName="AgeDistribution"/>-->
+        <table tableName="PROVINCE_DISTRIBUTION" domainObjectName="ProvinceDistribution"/>
     </context>
 </generatorConfiguration>

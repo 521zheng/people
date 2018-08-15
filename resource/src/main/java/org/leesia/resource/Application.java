@@ -1,8 +1,6 @@
 package org.leesia.resource;
 
-import org.leesia.resource.res.HanziResource;
-import org.leesia.resource.res.NationDistributionResource;
-import org.leesia.resource.res.NationResource;
+import org.leesia.resource.res.*;
 import org.leesia.resource.util.*;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -22,12 +20,12 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 //        SpringApplication.run(Application.class, args);
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         SpringUtil.setApplicationContext(ctx);
 
-//        NationDistributionResource nationDistributionResource = (NationDistributionResource) SpringUtil.getBean("nationDistributionResource");
-//        nationDistributionResource.insertAllNationDistribution();
+//        ProvinceDistributionResource provinceDistributionResource = (ProvinceDistributionResource) SpringUtil.getBean("provinceDistributionResource");
+//        provinceDistributionResource.insertAllProvinceDistribution();
     }
 }

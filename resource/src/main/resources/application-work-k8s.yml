@@ -1,10 +1,10 @@
 spring:
-  profiles: work
+  profiles: work-k8s
   application:
     name: people-resources
   datasource:
     name: leesia
-    url: jdbc:mysql://192.168.8.137:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
+    url: jdbc:mysql://172.18.10.10:3306/people?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=Hongkong
     username: root
     password: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -23,7 +23,7 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   redis:
-    host: 192.168.8.137
+    host: 172.18.10.11
     port: 6379
     timeout: 20000
 #    cluster:
