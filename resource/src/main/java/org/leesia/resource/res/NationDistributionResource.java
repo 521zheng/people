@@ -92,11 +92,17 @@ public class NationDistributionResource {
     }
 
     private List<NationDistribution> createAllNationDistribution() {
+        List<Nation> nations = nationService.get(new HashMap<>());
+        Map<String, Nation> nationMap = new HashMap<>();
+        for (Nation nation : nations) {
+            nationMap.put(nation.getNationName(), nation);
+        }
+
         List<NationDistribution> distributions = new ArrayList<>();
         for (Map.Entry<String, Double> entry : NATION_DISTRIBUTION.entrySet()) {
-            NationDistribution distribution = new NationDistribution();
-            Nation nation = nationService.getByName(entry.getKey());
+            Nation nation = nationMap.get(entry.getKey());
             if (nation != null) {
+                NationDistribution distribution = new NationDistribution();
                 distribution.setNationName(nation.getNationName());
                 distribution.setDistribution(entry.getValue());
                 distributions.add(distribution);

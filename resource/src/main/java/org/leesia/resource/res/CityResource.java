@@ -364,7 +364,7 @@ public class CityResource {
         CITIES.put("舟山市", "浙江省");
     }
 
-    private List<City> createAllCities() {
+    private List<City> createAllCities() throws Exception {
         List<Province> provinces = provinceService.get(new HashMap<>());
         Map<String, Province> provinceMap = new HashMap<>();
         for (Province province : provinces) {
@@ -372,11 +372,14 @@ public class CityResource {
         }
         List<City> cities = new ArrayList<>();
         for (Map.Entry<String, String> entry : CITIES.entrySet()) {
+            if (!provinceMap.containsKey(entry.getValue())) {
+                throw new Exception("省份不存在：" + entry.getValue());
+            }
+            Province province = provinceMap.get(entry.getValue());
             City city = new City();
             city.setCityName(entry.getKey());
-            Province province = provinceMap.get(entry.getValue());
-
-            city.setProvinceName(entry.getValue());
+            city.setProvince(province.getId());
+            city.setProvinceName(province.getProvinceName());
 
             cities.add(city);
         }
@@ -384,16 +387,7 @@ public class CityResource {
         return cities;
     }
 
-    public void insertAllCity() {
-        List<Province> provinces = provinceService.get(new HashMap<>());
-        Map<String, String> map = new HashMap<>();
-        for (Province province : provinces) {
-            map.put(province.getProvinceName(), province.getId());
-        }
-        List<City> cities = createAllCities();
-        for (City city : cities) {
-            city.setProvince(map.get(city.getProvinceName()));
-        }
-        cityService.batchInsert(cities);
+    public void insertAllCity() throws Exception {
+        cityService.batchInsert(createAllCities());
     }
 }

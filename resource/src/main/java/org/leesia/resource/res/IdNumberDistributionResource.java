@@ -70,11 +70,16 @@ public class IdNumberDistributionResource {
     }
 
     private List<IdNumberDistribution> createAllIdNumberDistribution() throws Exception {
+        List<Province> provinces = provinceService.get(new HashMap<>());
+        Map<String, Province> provinceMap = new HashMap<>();
+        for (Province province : provinces) {
+            provinceMap.put(province.getProvinceName(), province);
+        }
         List<IdNumberDistribution> distributions = new ArrayList<>();
         for (Map.Entry<String, String> entry : ID_NUMBER_DISTRIBUTION.entrySet()) {
-            IdNumberDistribution distribution = new IdNumberDistribution();
-            Province province = provinceService.getByName(entry.getKey());
+            Province province = provinceMap.get(entry.getKey());
             if (province != null) {
+                IdNumberDistribution distribution = new IdNumberDistribution();
                 distribution.setProvince(province.getId());
                 distribution.setProvinceName(province.getProvinceName());
                 distribution.setIdNumber(entry.getValue());

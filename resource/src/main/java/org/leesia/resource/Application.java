@@ -1,6 +1,5 @@
 package org.leesia.resource;
 
-import org.leesia.entity.*;
 import org.leesia.resource.res.*;
 import org.leesia.resource.util.*;
 import org.mybatis.spring.annotation.MapperScan;
@@ -25,6 +24,36 @@ public class Application {
 //        SpringApplication.run(Application.class, args);
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         SpringUtil.setApplicationContext(ctx);
+
+//        ProvinceResource provinceResource = (ProvinceResource) SpringUtil.getBean("provinceResource");
+//        provinceResource.insertAllProvince();
+
+//        CityResource cityResource = (CityResource) SpringUtil.getBean("cityResource");
+//        cityResource.insertAllCity();
+
+//        AgeDistributionResource ageDistributionResource = (AgeDistributionResource) SpringUtil.getBean("ageDistributionResource");
+//        ageDistributionResource.insertAllAgeDistribution();
+
+//        SexDistributionResource sexDistributionResource = (SexDistributionResource) SpringUtil.getBean("sexDistributionResource");
+//        sexDistributionResource.insertAllSexDistribution();
+
+//        IdNumberDistributionResource idNumberDistributionResource = (IdNumberDistributionResource) SpringUtil.getBean("idNumberDistributionResource");
+//        idNumberDistributionResource.insertAllIdNumberDistribution();
+
+//        LastNameResource lastNameResource = (LastNameResource) SpringUtil.getBean("lastNameResource");
+//        lastNameResource.insertAllLastName();
+
+//        LastNameDistributionResource lastNameDistributionResource = (LastNameDistributionResource) SpringUtil.getBean("lastNameDistributionResource");
+//        lastNameDistributionResource.insertAllLastNameDistribution();
+
+//        NationResource nationResource = (NationResource) SpringUtil.getBean("nationResource");
+//        nationResource.insertAllNation();
+
+//        NationDistributionResource nationDistributionResource = (NationDistributionResource) SpringUtil.getBean("nationDistributionResource");
+//        nationDistributionResource.insertAllNationDistribution();
+
+//        ProvinceDistributionResource provinceDistributionResource = (ProvinceDistributionResource) SpringUtil.getBean("provinceDistributionResource");
+//        provinceDistributionResource.insertAllProvinceDistribution();
 
 //        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
 //        hanziResource.insertAllHanzi();
