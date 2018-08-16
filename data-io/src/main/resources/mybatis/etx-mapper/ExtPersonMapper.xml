@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.leesia.dataio.dao.ext.ExtPersonMapper">
+    <resultMap id="BaseResultMap" type="org.leesia.entity.Person">
+        <id column="ID" jdbcType="CHAR" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday"/>
+        <result column="NATION" jdbcType="VARCHAR" property="nation"/>
+        <result column="REGISTER_PROVINCE" jdbcType="VARCHAR" property="registerProvince"/>
+        <result column="REGISTER_CITY" jdbcType="VARCHAR" property="registerCity"/>
+        <result column="LIVE_PROVINCE" jdbcType="VARCHAR" property="liveProvince"/>
+        <result column="LIVE_CITY" jdbcType="VARCHAR" property="liveCity"/>
+        <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
+        <result column="UPDATE_DATETIME" jdbcType="TIMESTAMP" property="updateDatetime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, NAME, SEX, BIRTHDAY, NATION, REGISTER_PROVINCE, REGISTER_CITY, LIVE_PROVINCE,
+        LIVE_CITY, CREATE_DATETIME, UPDATE_DATETIME
+    </sql>
+
+    <insert id="bacthInsert">
+        insert into PERSON (
+            ID, NAME, SEX, BIRTHDAY, NATION, REGISTER_PROVINCE, REGISTER_CITY, LIVE_PROVINCE,
+            LIVE_CITY, CREATE_DATETIME, UPDATE_DATETIME
+        )
+        values
+        <foreach collection="list" item="data" separator=",">
+            (
+                #{data.id,jdbcType=CHAR},
+                #{data.name,jdbcType=VARCHAR},
+                #{data.sex,jdbcType=INTEGER},
+                #{data.birthday,jdbcType=VARCHAR},
+                #{data.nation,jdbcType=VARCHAR},
+                #{data.registerProvince,jdbcType=VARCHAR},
+                #{data.registerCity,jdbcType=VARCHAR},
+                #{data.liveProvince,jdbcType=VARCHAR},
+                #{data.liveCity,jdbcType=VARCHAR},
+                #{data.createDatetime,jdbcType=TIMESTAMP},
+                #{data.updateDatetime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+</mapper>

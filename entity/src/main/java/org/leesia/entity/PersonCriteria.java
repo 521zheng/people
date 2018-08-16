@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HanziCriteria {
+public class PersonCriteria {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public HanziCriteria() {
+    public PersonCriteria() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -175,493 +175,553 @@ public class HanziCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andHanziIsNull() {
-            addCriterion("HANZI is null");
+        public Criteria andNameIsNull() {
+            addCriterion("NAME is null");
             return (Criteria) this;
         }
 
-        public Criteria andHanziIsNotNull() {
-            addCriterion("HANZI is not null");
+        public Criteria andNameIsNotNull() {
+            addCriterion("NAME is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHanziEqualTo(String value) {
-            addCriterion("HANZI =", value, "hanzi");
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("NAME =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziNotEqualTo(String value) {
-            addCriterion("HANZI <>", value, "hanzi");
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("NAME <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziGreaterThan(String value) {
-            addCriterion("HANZI >", value, "hanzi");
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("NAME >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziGreaterThanOrEqualTo(String value) {
-            addCriterion("HANZI >=", value, "hanzi");
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("NAME >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziLessThan(String value) {
-            addCriterion("HANZI <", value, "hanzi");
+        public Criteria andNameLessThan(String value) {
+            addCriterion("NAME <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziLessThanOrEqualTo(String value) {
-            addCriterion("HANZI <=", value, "hanzi");
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("NAME <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziLike(String value) {
-            addCriterion("HANZI like", value, "hanzi");
+        public Criteria andNameLike(String value) {
+            addCriterion("NAME like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziNotLike(String value) {
-            addCriterion("HANZI not like", value, "hanzi");
+        public Criteria andNameNotLike(String value) {
+            addCriterion("NAME not like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziIn(List<String> values) {
-            addCriterion("HANZI in", values, "hanzi");
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("NAME in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziNotIn(List<String> values) {
-            addCriterion("HANZI not in", values, "hanzi");
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("NAME not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziBetween(String value1, String value2) {
-            addCriterion("HANZI between", value1, value2, "hanzi");
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("NAME between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andHanziNotBetween(String value1, String value2) {
-            addCriterion("HANZI not between", value1, value2, "hanzi");
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("NAME not between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameIsNull() {
-            addCriterion("IS_NAME is null");
+        public Criteria andSexIsNull() {
+            addCriterion("SEX is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameIsNotNull() {
-            addCriterion("IS_NAME is not null");
+        public Criteria andSexIsNotNull() {
+            addCriterion("SEX is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameEqualTo(Boolean value) {
-            addCriterion("IS_NAME =", value, "isName");
+        public Criteria andSexEqualTo(Integer value) {
+            addCriterion("SEX =", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameNotEqualTo(Boolean value) {
-            addCriterion("IS_NAME <>", value, "isName");
+        public Criteria andSexNotEqualTo(Integer value) {
+            addCriterion("SEX <>", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameGreaterThan(Boolean value) {
-            addCriterion("IS_NAME >", value, "isName");
+        public Criteria andSexGreaterThan(Integer value) {
+            addCriterion("SEX >", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("IS_NAME >=", value, "isName");
+        public Criteria andSexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("SEX >=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameLessThan(Boolean value) {
-            addCriterion("IS_NAME <", value, "isName");
+        public Criteria andSexLessThan(Integer value) {
+            addCriterion("SEX <", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameLessThanOrEqualTo(Boolean value) {
-            addCriterion("IS_NAME <=", value, "isName");
+        public Criteria andSexLessThanOrEqualTo(Integer value) {
+            addCriterion("SEX <=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameIn(List<Boolean> values) {
-            addCriterion("IS_NAME in", values, "isName");
+        public Criteria andSexIn(List<Integer> values) {
+            addCriterion("SEX in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameNotIn(List<Boolean> values) {
-            addCriterion("IS_NAME not in", values, "isName");
+        public Criteria andSexNotIn(List<Integer> values) {
+            addCriterion("SEX not in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_NAME between", value1, value2, "isName");
+        public Criteria andSexBetween(Integer value1, Integer value2) {
+            addCriterion("SEX between", value1, value2, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsNameNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_NAME not between", value1, value2, "isName");
+        public Criteria andSexNotBetween(Integer value1, Integer value2) {
+            addCriterion("SEX not between", value1, value2, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondIsNull() {
-            addCriterion("IS_SECOND is null");
+        public Criteria andBirthdayIsNull() {
+            addCriterion("BIRTHDAY is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondIsNotNull() {
-            addCriterion("IS_SECOND is not null");
+        public Criteria andBirthdayIsNotNull() {
+            addCriterion("BIRTHDAY is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondEqualTo(Boolean value) {
-            addCriterion("IS_SECOND =", value, "isSecond");
+        public Criteria andBirthdayEqualTo(String value) {
+            addCriterion("BIRTHDAY =", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondNotEqualTo(Boolean value) {
-            addCriterion("IS_SECOND <>", value, "isSecond");
+        public Criteria andBirthdayNotEqualTo(String value) {
+            addCriterion("BIRTHDAY <>", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondGreaterThan(Boolean value) {
-            addCriterion("IS_SECOND >", value, "isSecond");
+        public Criteria andBirthdayGreaterThan(String value) {
+            addCriterion("BIRTHDAY >", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("IS_SECOND >=", value, "isSecond");
+        public Criteria andBirthdayGreaterThanOrEqualTo(String value) {
+            addCriterion("BIRTHDAY >=", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondLessThan(Boolean value) {
-            addCriterion("IS_SECOND <", value, "isSecond");
+        public Criteria andBirthdayLessThan(String value) {
+            addCriterion("BIRTHDAY <", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondLessThanOrEqualTo(Boolean value) {
-            addCriterion("IS_SECOND <=", value, "isSecond");
+        public Criteria andBirthdayLessThanOrEqualTo(String value) {
+            addCriterion("BIRTHDAY <=", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondIn(List<Boolean> values) {
-            addCriterion("IS_SECOND in", values, "isSecond");
+        public Criteria andBirthdayLike(String value) {
+            addCriterion("BIRTHDAY like", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondNotIn(List<Boolean> values) {
-            addCriterion("IS_SECOND not in", values, "isSecond");
+        public Criteria andBirthdayNotLike(String value) {
+            addCriterion("BIRTHDAY not like", value, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_SECOND between", value1, value2, "isSecond");
+        public Criteria andBirthdayIn(List<String> values) {
+            addCriterion("BIRTHDAY in", values, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsSecondNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_SECOND not between", value1, value2, "isSecond");
+        public Criteria andBirthdayNotIn(List<String> values) {
+            addCriterion("BIRTHDAY not in", values, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdIsNull() {
-            addCriterion("IS_THIRD is null");
+        public Criteria andBirthdayBetween(String value1, String value2) {
+            addCriterion("BIRTHDAY between", value1, value2, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdIsNotNull() {
-            addCriterion("IS_THIRD is not null");
+        public Criteria andBirthdayNotBetween(String value1, String value2) {
+            addCriterion("BIRTHDAY not between", value1, value2, "birthday");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdEqualTo(Boolean value) {
-            addCriterion("IS_THIRD =", value, "isThird");
+        public Criteria andNationIsNull() {
+            addCriterion("NATION is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdNotEqualTo(Boolean value) {
-            addCriterion("IS_THIRD <>", value, "isThird");
+        public Criteria andNationIsNotNull() {
+            addCriterion("NATION is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdGreaterThan(Boolean value) {
-            addCriterion("IS_THIRD >", value, "isThird");
+        public Criteria andNationEqualTo(String value) {
+            addCriterion("NATION =", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("IS_THIRD >=", value, "isThird");
+        public Criteria andNationNotEqualTo(String value) {
+            addCriterion("NATION <>", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdLessThan(Boolean value) {
-            addCriterion("IS_THIRD <", value, "isThird");
+        public Criteria andNationGreaterThan(String value) {
+            addCriterion("NATION >", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdLessThanOrEqualTo(Boolean value) {
-            addCriterion("IS_THIRD <=", value, "isThird");
+        public Criteria andNationGreaterThanOrEqualTo(String value) {
+            addCriterion("NATION >=", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdIn(List<Boolean> values) {
-            addCriterion("IS_THIRD in", values, "isThird");
+        public Criteria andNationLessThan(String value) {
+            addCriterion("NATION <", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdNotIn(List<Boolean> values) {
-            addCriterion("IS_THIRD not in", values, "isThird");
+        public Criteria andNationLessThanOrEqualTo(String value) {
+            addCriterion("NATION <=", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_THIRD between", value1, value2, "isThird");
+        public Criteria andNationLike(String value) {
+            addCriterion("NATION like", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsThirdNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_THIRD not between", value1, value2, "isThird");
+        public Criteria andNationNotLike(String value) {
+            addCriterion("NATION not like", value, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleIsNull() {
-            addCriterion("IS_MALE is null");
+        public Criteria andNationIn(List<String> values) {
+            addCriterion("NATION in", values, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleIsNotNull() {
-            addCriterion("IS_MALE is not null");
+        public Criteria andNationNotIn(List<String> values) {
+            addCriterion("NATION not in", values, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleEqualTo(Boolean value) {
-            addCriterion("IS_MALE =", value, "isMale");
+        public Criteria andNationBetween(String value1, String value2) {
+            addCriterion("NATION between", value1, value2, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleNotEqualTo(Boolean value) {
-            addCriterion("IS_MALE <>", value, "isMale");
+        public Criteria andNationNotBetween(String value1, String value2) {
+            addCriterion("NATION not between", value1, value2, "nation");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleGreaterThan(Boolean value) {
-            addCriterion("IS_MALE >", value, "isMale");
+        public Criteria andRegisterProvinceIsNull() {
+            addCriterion("REGISTER_PROVINCE is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("IS_MALE >=", value, "isMale");
+        public Criteria andRegisterProvinceIsNotNull() {
+            addCriterion("REGISTER_PROVINCE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleLessThan(Boolean value) {
-            addCriterion("IS_MALE <", value, "isMale");
+        public Criteria andRegisterProvinceEqualTo(String value) {
+            addCriterion("REGISTER_PROVINCE =", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleLessThanOrEqualTo(Boolean value) {
-            addCriterion("IS_MALE <=", value, "isMale");
+        public Criteria andRegisterProvinceNotEqualTo(String value) {
+            addCriterion("REGISTER_PROVINCE <>", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleIn(List<Boolean> values) {
-            addCriterion("IS_MALE in", values, "isMale");
+        public Criteria andRegisterProvinceGreaterThan(String value) {
+            addCriterion("REGISTER_PROVINCE >", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleNotIn(List<Boolean> values) {
-            addCriterion("IS_MALE not in", values, "isMale");
+        public Criteria andRegisterProvinceGreaterThanOrEqualTo(String value) {
+            addCriterion("REGISTER_PROVINCE >=", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_MALE between", value1, value2, "isMale");
+        public Criteria andRegisterProvinceLessThan(String value) {
+            addCriterion("REGISTER_PROVINCE <", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsMaleNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_MALE not between", value1, value2, "isMale");
+        public Criteria andRegisterProvinceLessThanOrEqualTo(String value) {
+            addCriterion("REGISTER_PROVINCE <=", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleIsNull() {
-            addCriterion("IS_FEMALE is null");
+        public Criteria andRegisterProvinceLike(String value) {
+            addCriterion("REGISTER_PROVINCE like", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleIsNotNull() {
-            addCriterion("IS_FEMALE is not null");
+        public Criteria andRegisterProvinceNotLike(String value) {
+            addCriterion("REGISTER_PROVINCE not like", value, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleEqualTo(Boolean value) {
-            addCriterion("IS_FEMALE =", value, "isFemale");
+        public Criteria andRegisterProvinceIn(List<String> values) {
+            addCriterion("REGISTER_PROVINCE in", values, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleNotEqualTo(Boolean value) {
-            addCriterion("IS_FEMALE <>", value, "isFemale");
+        public Criteria andRegisterProvinceNotIn(List<String> values) {
+            addCriterion("REGISTER_PROVINCE not in", values, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleGreaterThan(Boolean value) {
-            addCriterion("IS_FEMALE >", value, "isFemale");
+        public Criteria andRegisterProvinceBetween(String value1, String value2) {
+            addCriterion("REGISTER_PROVINCE between", value1, value2, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("IS_FEMALE >=", value, "isFemale");
+        public Criteria andRegisterProvinceNotBetween(String value1, String value2) {
+            addCriterion("REGISTER_PROVINCE not between", value1, value2, "registerProvince");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleLessThan(Boolean value) {
-            addCriterion("IS_FEMALE <", value, "isFemale");
+        public Criteria andRegisterCityIsNull() {
+            addCriterion("REGISTER_CITY is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleLessThanOrEqualTo(Boolean value) {
-            addCriterion("IS_FEMALE <=", value, "isFemale");
+        public Criteria andRegisterCityIsNotNull() {
+            addCriterion("REGISTER_CITY is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleIn(List<Boolean> values) {
-            addCriterion("IS_FEMALE in", values, "isFemale");
+        public Criteria andRegisterCityEqualTo(String value) {
+            addCriterion("REGISTER_CITY =", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleNotIn(List<Boolean> values) {
-            addCriterion("IS_FEMALE not in", values, "isFemale");
+        public Criteria andRegisterCityNotEqualTo(String value) {
+            addCriterion("REGISTER_CITY <>", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_FEMALE between", value1, value2, "isFemale");
+        public Criteria andRegisterCityGreaterThan(String value) {
+            addCriterion("REGISTER_CITY >", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andIsFemaleNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("IS_FEMALE not between", value1, value2, "isFemale");
+        public Criteria andRegisterCityGreaterThanOrEqualTo(String value) {
+            addCriterion("REGISTER_CITY >=", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectIsNull() {
-            addCriterion("MALE_PERFECT is null");
+        public Criteria andRegisterCityLessThan(String value) {
+            addCriterion("REGISTER_CITY <", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectIsNotNull() {
-            addCriterion("MALE_PERFECT is not null");
+        public Criteria andRegisterCityLessThanOrEqualTo(String value) {
+            addCriterion("REGISTER_CITY <=", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectEqualTo(Boolean value) {
-            addCriterion("MALE_PERFECT =", value, "malePerfect");
+        public Criteria andRegisterCityLike(String value) {
+            addCriterion("REGISTER_CITY like", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectNotEqualTo(Boolean value) {
-            addCriterion("MALE_PERFECT <>", value, "malePerfect");
+        public Criteria andRegisterCityNotLike(String value) {
+            addCriterion("REGISTER_CITY not like", value, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectGreaterThan(Boolean value) {
-            addCriterion("MALE_PERFECT >", value, "malePerfect");
+        public Criteria andRegisterCityIn(List<String> values) {
+            addCriterion("REGISTER_CITY in", values, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("MALE_PERFECT >=", value, "malePerfect");
+        public Criteria andRegisterCityNotIn(List<String> values) {
+            addCriterion("REGISTER_CITY not in", values, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectLessThan(Boolean value) {
-            addCriterion("MALE_PERFECT <", value, "malePerfect");
+        public Criteria andRegisterCityBetween(String value1, String value2) {
+            addCriterion("REGISTER_CITY between", value1, value2, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectLessThanOrEqualTo(Boolean value) {
-            addCriterion("MALE_PERFECT <=", value, "malePerfect");
+        public Criteria andRegisterCityNotBetween(String value1, String value2) {
+            addCriterion("REGISTER_CITY not between", value1, value2, "registerCity");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectIn(List<Boolean> values) {
-            addCriterion("MALE_PERFECT in", values, "malePerfect");
+        public Criteria andLiveProvinceIsNull() {
+            addCriterion("LIVE_PROVINCE is null");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectNotIn(List<Boolean> values) {
-            addCriterion("MALE_PERFECT not in", values, "malePerfect");
+        public Criteria andLiveProvinceIsNotNull() {
+            addCriterion("LIVE_PROVINCE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectBetween(Boolean value1, Boolean value2) {
-            addCriterion("MALE_PERFECT between", value1, value2, "malePerfect");
+        public Criteria andLiveProvinceEqualTo(String value) {
+            addCriterion("LIVE_PROVINCE =", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andMalePerfectNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("MALE_PERFECT not between", value1, value2, "malePerfect");
+        public Criteria andLiveProvinceNotEqualTo(String value) {
+            addCriterion("LIVE_PROVINCE <>", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectIsNull() {
-            addCriterion("FEMALE_PERFECT is null");
+        public Criteria andLiveProvinceGreaterThan(String value) {
+            addCriterion("LIVE_PROVINCE >", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectIsNotNull() {
-            addCriterion("FEMALE_PERFECT is not null");
+        public Criteria andLiveProvinceGreaterThanOrEqualTo(String value) {
+            addCriterion("LIVE_PROVINCE >=", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectEqualTo(Boolean value) {
-            addCriterion("FEMALE_PERFECT =", value, "femalePerfect");
+        public Criteria andLiveProvinceLessThan(String value) {
+            addCriterion("LIVE_PROVINCE <", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectNotEqualTo(Boolean value) {
-            addCriterion("FEMALE_PERFECT <>", value, "femalePerfect");
+        public Criteria andLiveProvinceLessThanOrEqualTo(String value) {
+            addCriterion("LIVE_PROVINCE <=", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectGreaterThan(Boolean value) {
-            addCriterion("FEMALE_PERFECT >", value, "femalePerfect");
+        public Criteria andLiveProvinceLike(String value) {
+            addCriterion("LIVE_PROVINCE like", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("FEMALE_PERFECT >=", value, "femalePerfect");
+        public Criteria andLiveProvinceNotLike(String value) {
+            addCriterion("LIVE_PROVINCE not like", value, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectLessThan(Boolean value) {
-            addCriterion("FEMALE_PERFECT <", value, "femalePerfect");
+        public Criteria andLiveProvinceIn(List<String> values) {
+            addCriterion("LIVE_PROVINCE in", values, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectLessThanOrEqualTo(Boolean value) {
-            addCriterion("FEMALE_PERFECT <=", value, "femalePerfect");
+        public Criteria andLiveProvinceNotIn(List<String> values) {
+            addCriterion("LIVE_PROVINCE not in", values, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectIn(List<Boolean> values) {
-            addCriterion("FEMALE_PERFECT in", values, "femalePerfect");
+        public Criteria andLiveProvinceBetween(String value1, String value2) {
+            addCriterion("LIVE_PROVINCE between", value1, value2, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectNotIn(List<Boolean> values) {
-            addCriterion("FEMALE_PERFECT not in", values, "femalePerfect");
+        public Criteria andLiveProvinceNotBetween(String value1, String value2) {
+            addCriterion("LIVE_PROVINCE not between", value1, value2, "liveProvince");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectBetween(Boolean value1, Boolean value2) {
-            addCriterion("FEMALE_PERFECT between", value1, value2, "femalePerfect");
+        public Criteria andLiveCityIsNull() {
+            addCriterion("LIVE_CITY is null");
             return (Criteria) this;
         }
 
-        public Criteria andFemalePerfectNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("FEMALE_PERFECT not between", value1, value2, "femalePerfect");
+        public Criteria andLiveCityIsNotNull() {
+            addCriterion("LIVE_CITY is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityEqualTo(String value) {
+            addCriterion("LIVE_CITY =", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityNotEqualTo(String value) {
+            addCriterion("LIVE_CITY <>", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityGreaterThan(String value) {
+            addCriterion("LIVE_CITY >", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityGreaterThanOrEqualTo(String value) {
+            addCriterion("LIVE_CITY >=", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityLessThan(String value) {
+            addCriterion("LIVE_CITY <", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityLessThanOrEqualTo(String value) {
+            addCriterion("LIVE_CITY <=", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityLike(String value) {
+            addCriterion("LIVE_CITY like", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityNotLike(String value) {
+            addCriterion("LIVE_CITY not like", value, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityIn(List<String> values) {
+            addCriterion("LIVE_CITY in", values, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityNotIn(List<String> values) {
+            addCriterion("LIVE_CITY not in", values, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityBetween(String value1, String value2) {
+            addCriterion("LIVE_CITY between", value1, value2, "liveCity");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveCityNotBetween(String value1, String value2) {
+            addCriterion("LIVE_CITY not between", value1, value2, "liveCity");
             return (Criteria) this;
         }
 

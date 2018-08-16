@@ -13,6 +13,8 @@ public enum RedisKeyPrefix {
     NationDistributionPrefix("NATION_DISTRIBUTION", "民族人口分布Key前缀"),
     HanziPrefix("HANZI", "汉字Key前缀"),
     LastNameDistributionPrefix("LAST_NAME_DISTRIBUTION", "姓氏分布Key前缀"),
+    SexDistributionPrefix("SEX_DISTRIBUTION", "性别分布Key前缀"),
+    ProvinceDistributionPrefix("PROVINCE_DISTRIBUTION", "省份人口分布Key前缀"),
     ;
 
     private RedisKeyPrefix(String prefix, String desc) {

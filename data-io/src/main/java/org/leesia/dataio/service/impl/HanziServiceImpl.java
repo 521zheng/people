@@ -119,6 +119,41 @@ public class HanziServiceImpl implements HanziService {
             c.andHanziLike("%" + hanzi + "%");
         }
 
+        Boolean isName = (Boolean) params.get("isName");
+        if (isName != null) {
+            c.andIsNameEqualTo(isName);
+        }
+
+        Boolean isSecond = (Boolean) params.get("isSecond");
+        if (isSecond != null) {
+            c.andIsSecondEqualTo(isSecond);
+        }
+
+        Boolean isThird = (Boolean) params.get("isThird");
+        if (isThird != null) {
+            c.andIsThirdEqualTo(isThird);
+        }
+
+        Boolean isMale = (Boolean) params.get("isMale");
+        if (isMale != null) {
+            c.andIsMaleEqualTo(isMale);
+        }
+
+        Boolean isFemale = (Boolean) params.get("isFemale");
+        if (isFemale != null) {
+            c.andIsFemaleEqualTo(isFemale);
+        }
+
+        Boolean malePerfect = (Boolean) params.get("malePerfect");
+        if (malePerfect != null) {
+            c.andMalePerfectEqualTo(malePerfect);
+        }
+
+        Boolean femalePerfect = (Boolean) params.get("femalePerfect");
+        if (femalePerfect != null) {
+            c.andFemalePerfectEqualTo(femalePerfect);
+        }
+
         return criteria;
     }
 }

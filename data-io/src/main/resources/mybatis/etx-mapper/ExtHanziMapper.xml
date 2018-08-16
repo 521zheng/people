@@ -3,24 +3,39 @@
 <mapper namespace="org.leesia.dataio.dao.ext.ExtHanziMapper">
     <resultMap id="BaseResultMap" type="org.leesia.entity.Hanzi">
         <id column="ID" jdbcType="CHAR" property="id"/>
-        <result column="HANZI" jdbcType="CHAR" property="hanzi"/>
+        <result column="HANZI" jdbcType="VARCHAR" property="hanzi"/>
+        <result column="IS_NAME" jdbcType="BIT" property="isName"/>
+        <result column="IS_SECOND" jdbcType="BIT" property="isSecond"/>
+        <result column="IS_THIRD" jdbcType="BIT" property="isThird"/>
+        <result column="IS_MALE" jdbcType="BIT" property="isMale"/>
+        <result column="IS_FEMALE" jdbcType="BIT" property="isFemale"/>
+        <result column="MALE_PERFECT" jdbcType="BIT" property="malePerfect"/>
+        <result column="FEMALE_PERFECT" jdbcType="BIT" property="femalePerfect"/>
         <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
         <result column="UPDATE_DATETIME" jdbcType="TIMESTAMP" property="updateDatetime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, HANZI, CREATE_DATETIME, UPDATE_DATETIME
+        ID, HANZI, IS_NAME, IS_SECOND, IS_THIRD, CREATE_DATETIME, UPDATE_DATETIME
     </sql>
 
     <insert id="bacthInsert">
         insert into COMMON_HANZI (
-            ID, HANZI, CREATE_DATETIME, UPDATE_DATETIME
+            ID, HANZI, IS_NAME, IS_SECOND, IS_THIRD, IS_MALE, IS_FEMALE, MALE_PERFECT, FEMALE_PERFECT,
+            CREATE_DATETIME, UPDATE_DATETIME
         )
         values
         <foreach collection="list" item="data" separator=",">
             (
                 #{data.id,jdbcType=CHAR},
-                #{data.hanzi,jdbcType=CHAR},
+                #{data.hanzi,jdbcType=VARCHAR},
+                #{data.isName,jdbcType=BIT},
+                #{data.isSecond,jdbcType=BIT},
+                #{data.isThird,jdbcType=BIT},
+                #{data.isMale,jdbcType=BIT},
+                #{data.isFemale,jdbcType=BIT},
+                #{data.malePerfect,jdbcType=BIT},
+                #{data.femalePerfect,jdbcType=BIT},
                 #{data.createDatetime,jdbcType=TIMESTAMP},
                 #{data.updateDatetime,jdbcType=TIMESTAMP}
             )

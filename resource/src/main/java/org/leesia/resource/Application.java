@@ -1,6 +1,6 @@
 package org.leesia.resource;
 
-import org.leesia.entity.LastNameDistribution;
+import org.leesia.entity.*;
 import org.leesia.resource.res.*;
 import org.leesia.resource.util.*;
 import org.mybatis.spring.annotation.MapperScan;
@@ -26,7 +26,7 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         SpringUtil.setApplicationContext(ctx);
 
-//        LastNameDistributionResource lastNameDistributionResource = (LastNameDistributionResource) SpringUtil.getBean("lastNameDistributionResource");
-//        lastNameDistributionResource.insertAllLastNameDistribution();
+//        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
+//        hanziResource.insertAllHanzi();
     }
 }

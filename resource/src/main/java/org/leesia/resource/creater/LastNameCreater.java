@@ -34,7 +34,6 @@ public class LastNameCreater {
     @Autowired
     private LastNameDistributionService lastNameDistributionService;
 
-
     @Autowired
     private RedisConfig redisConfig;
 

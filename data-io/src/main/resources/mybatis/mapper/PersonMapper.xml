@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.leesia.dataio.dao.HanziMapper">
-    <resultMap id="BaseResultMap" type="org.leesia.entity.Hanzi">
+<mapper namespace="org.leesia.dataio.dao.PersonMapper">
+    <resultMap id="BaseResultMap" type="org.leesia.entity.Person">
         <id column="ID" jdbcType="CHAR" property="id"/>
-        <result column="HANZI" jdbcType="VARCHAR" property="hanzi"/>
-        <result column="IS_NAME" jdbcType="BIT" property="isName"/>
-        <result column="IS_SECOND" jdbcType="BIT" property="isSecond"/>
-        <result column="IS_THIRD" jdbcType="BIT" property="isThird"/>
-        <result column="IS_MALE" jdbcType="BIT" property="isMale"/>
-        <result column="IS_FEMALE" jdbcType="BIT" property="isFemale"/>
-        <result column="MALE_PERFECT" jdbcType="BIT" property="malePerfect"/>
-        <result column="FEMALE_PERFECT" jdbcType="BIT" property="femalePerfect"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="SEX" jdbcType="INTEGER" property="sex"/>
+        <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday"/>
+        <result column="NATION" jdbcType="VARCHAR" property="nation"/>
+        <result column="REGISTER_PROVINCE" jdbcType="VARCHAR" property="registerProvince"/>
+        <result column="REGISTER_CITY" jdbcType="VARCHAR" property="registerCity"/>
+        <result column="LIVE_PROVINCE" jdbcType="VARCHAR" property="liveProvince"/>
+        <result column="LIVE_CITY" jdbcType="VARCHAR" property="liveCity"/>
         <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
         <result column="UPDATE_DATETIME" jdbcType="TIMESTAMP" property="updateDatetime"/>
     </resultMap>
@@ -75,16 +75,16 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        ID, HANZI, IS_NAME, IS_SECOND, IS_THIRD, IS_MALE, IS_FEMALE, MALE_PERFECT, FEMALE_PERFECT,
-        CREATE_DATETIME, UPDATE_DATETIME
+        ID, NAME, SEX, BIRTHDAY, NATION, REGISTER_PROVINCE, REGISTER_CITY, LIVE_PROVINCE,
+        LIVE_CITY, CREATE_DATETIME, UPDATE_DATETIME
     </sql>
-    <select id="selectByExample" parameterType="org.leesia.entity.HanziCriteria" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="org.leesia.entity.PersonCriteria" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from COMMON_HANZI
+        from PERSON
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -95,58 +95,58 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from COMMON_HANZI
+        from PERSON
         where ID = #{id,jdbcType=CHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete from COMMON_HANZI
+        delete from PERSON
         where ID = #{id,jdbcType=CHAR}
     </delete>
-    <delete id="deleteByExample" parameterType="org.leesia.entity.HanziCriteria">
-        delete from COMMON_HANZI
+    <delete id="deleteByExample" parameterType="org.leesia.entity.PersonCriteria">
+        delete from PERSON
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="org.leesia.entity.Hanzi">
-        insert into COMMON_HANZI (ID, HANZI, IS_NAME, IS_SECOND,
-        IS_THIRD, IS_MALE, IS_FEMALE, MALE_PERFECT,
-        FEMALE_PERFECT, CREATE_DATETIME, UPDATE_DATETIME
-        )
-        values (#{id,jdbcType=CHAR}, #{hanzi,jdbcType=VARCHAR}, #{isName,jdbcType=BIT}, #{isSecond,jdbcType=BIT},
-        #{isThird,jdbcType=BIT}, #{isMale,jdbcType=BIT}, #{isFemale,jdbcType=BIT}, #{malePerfect,jdbcType=BIT},
-        #{femalePerfect,jdbcType=BIT}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP}
-        )
+    <insert id="insert" parameterType="org.leesia.entity.Person">
+        insert into PERSON (ID, NAME, SEX, BIRTHDAY,
+        NATION, REGISTER_PROVINCE, REGISTER_CITY,
+        LIVE_PROVINCE, LIVE_CITY, CREATE_DATETIME,
+        UPDATE_DATETIME)
+        values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR},
+        #{nation,jdbcType=VARCHAR}, #{registerProvince,jdbcType=VARCHAR}, #{registerCity,jdbcType=VARCHAR},
+        #{liveProvince,jdbcType=VARCHAR}, #{liveCity,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP},
+        #{updateDatetime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="org.leesia.entity.Hanzi">
-        insert into COMMON_HANZI
+    <insert id="insertSelective" parameterType="org.leesia.entity.Person">
+        insert into PERSON
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
             </if>
-            <if test="hanzi != null">
-                HANZI,
+            <if test="name != null">
+                NAME,
             </if>
-            <if test="isName != null">
-                IS_NAME,
+            <if test="sex != null">
+                SEX,
             </if>
-            <if test="isSecond != null">
-                IS_SECOND,
+            <if test="birthday != null">
+                BIRTHDAY,
             </if>
-            <if test="isThird != null">
-                IS_THIRD,
+            <if test="nation != null">
+                NATION,
             </if>
-            <if test="isMale != null">
-                IS_MALE,
+            <if test="registerProvince != null">
+                REGISTER_PROVINCE,
             </if>
-            <if test="isFemale != null">
-                IS_FEMALE,
+            <if test="registerCity != null">
+                REGISTER_CITY,
             </if>
-            <if test="malePerfect != null">
-                MALE_PERFECT,
+            <if test="liveProvince != null">
+                LIVE_PROVINCE,
             </if>
-            <if test="femalePerfect != null">
-                FEMALE_PERFECT,
+            <if test="liveCity != null">
+                LIVE_CITY,
             </if>
             <if test="createDatetime != null">
                 CREATE_DATETIME,
@@ -159,29 +159,29 @@
             <if test="id != null">
                 #{id,jdbcType=CHAR},
             </if>
-            <if test="hanzi != null">
-                #{hanzi,jdbcType=VARCHAR},
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
-            <if test="isName != null">
-                #{isName,jdbcType=BIT},
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
             </if>
-            <if test="isSecond != null">
-                #{isSecond,jdbcType=BIT},
+            <if test="birthday != null">
+                #{birthday,jdbcType=VARCHAR},
             </if>
-            <if test="isThird != null">
-                #{isThird,jdbcType=BIT},
+            <if test="nation != null">
+                #{nation,jdbcType=VARCHAR},
             </if>
-            <if test="isMale != null">
-                #{isMale,jdbcType=BIT},
+            <if test="registerProvince != null">
+                #{registerProvince,jdbcType=VARCHAR},
             </if>
-            <if test="isFemale != null">
-                #{isFemale,jdbcType=BIT},
+            <if test="registerCity != null">
+                #{registerCity,jdbcType=VARCHAR},
             </if>
-            <if test="malePerfect != null">
-                #{malePerfect,jdbcType=BIT},
+            <if test="liveProvince != null">
+                #{liveProvince,jdbcType=VARCHAR},
             </if>
-            <if test="femalePerfect != null">
-                #{femalePerfect,jdbcType=BIT},
+            <if test="liveCity != null">
+                #{liveCity,jdbcType=VARCHAR},
             </if>
             <if test="createDatetime != null">
                 #{createDatetime,jdbcType=TIMESTAMP},
@@ -191,41 +191,41 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="org.leesia.entity.HanziCriteria" resultType="java.lang.Long">
-        select count(*) from COMMON_HANZI
+    <select id="countByExample" parameterType="org.leesia.entity.PersonCriteria" resultType="java.lang.Long">
+        select count(*) from PERSON
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update COMMON_HANZI
+        update PERSON
         <set>
             <if test="record.id != null">
                 ID = #{record.id,jdbcType=CHAR},
             </if>
-            <if test="record.hanzi != null">
-                HANZI = #{record.hanzi,jdbcType=VARCHAR},
+            <if test="record.name != null">
+                NAME = #{record.name,jdbcType=VARCHAR},
             </if>
-            <if test="record.isName != null">
-                IS_NAME = #{record.isName,jdbcType=BIT},
+            <if test="record.sex != null">
+                SEX = #{record.sex,jdbcType=INTEGER},
             </if>
-            <if test="record.isSecond != null">
-                IS_SECOND = #{record.isSecond,jdbcType=BIT},
+            <if test="record.birthday != null">
+                BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
             </if>
-            <if test="record.isThird != null">
-                IS_THIRD = #{record.isThird,jdbcType=BIT},
+            <if test="record.nation != null">
+                NATION = #{record.nation,jdbcType=VARCHAR},
             </if>
-            <if test="record.isMale != null">
-                IS_MALE = #{record.isMale,jdbcType=BIT},
+            <if test="record.registerProvince != null">
+                REGISTER_PROVINCE = #{record.registerProvince,jdbcType=VARCHAR},
             </if>
-            <if test="record.isFemale != null">
-                IS_FEMALE = #{record.isFemale,jdbcType=BIT},
+            <if test="record.registerCity != null">
+                REGISTER_CITY = #{record.registerCity,jdbcType=VARCHAR},
             </if>
-            <if test="record.malePerfect != null">
-                MALE_PERFECT = #{record.malePerfect,jdbcType=BIT},
+            <if test="record.liveProvince != null">
+                LIVE_PROVINCE = #{record.liveProvince,jdbcType=VARCHAR},
             </if>
-            <if test="record.femalePerfect != null">
-                FEMALE_PERFECT = #{record.femalePerfect,jdbcType=BIT},
+            <if test="record.liveCity != null">
+                LIVE_CITY = #{record.liveCity,jdbcType=VARCHAR},
             </if>
             <if test="record.createDatetime != null">
                 CREATE_DATETIME = #{record.createDatetime,jdbcType=TIMESTAMP},
@@ -239,48 +239,48 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update COMMON_HANZI
+        update PERSON
         set ID = #{record.id,jdbcType=CHAR},
-        HANZI = #{record.hanzi,jdbcType=VARCHAR},
-        IS_NAME = #{record.isName,jdbcType=BIT},
-        IS_SECOND = #{record.isSecond,jdbcType=BIT},
-        IS_THIRD = #{record.isThird,jdbcType=BIT},
-        IS_MALE = #{record.isMale,jdbcType=BIT},
-        IS_FEMALE = #{record.isFemale,jdbcType=BIT},
-        MALE_PERFECT = #{record.malePerfect,jdbcType=BIT},
-        FEMALE_PERFECT = #{record.femalePerfect,jdbcType=BIT},
+        NAME = #{record.name,jdbcType=VARCHAR},
+        SEX = #{record.sex,jdbcType=INTEGER},
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+        NATION = #{record.nation,jdbcType=VARCHAR},
+        REGISTER_PROVINCE = #{record.registerProvince,jdbcType=VARCHAR},
+        REGISTER_CITY = #{record.registerCity,jdbcType=VARCHAR},
+        LIVE_PROVINCE = #{record.liveProvince,jdbcType=VARCHAR},
+        LIVE_CITY = #{record.liveCity,jdbcType=VARCHAR},
         CREATE_DATETIME = #{record.createDatetime,jdbcType=TIMESTAMP},
         UPDATE_DATETIME = #{record.updateDatetime,jdbcType=TIMESTAMP}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="org.leesia.entity.Hanzi">
-        update COMMON_HANZI
+    <update id="updateByPrimaryKeySelective" parameterType="org.leesia.entity.Person">
+        update PERSON
         <set>
-            <if test="hanzi != null">
-                HANZI = #{hanzi,jdbcType=VARCHAR},
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="isName != null">
-                IS_NAME = #{isName,jdbcType=BIT},
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=INTEGER},
             </if>
-            <if test="isSecond != null">
-                IS_SECOND = #{isSecond,jdbcType=BIT},
+            <if test="birthday != null">
+                BIRTHDAY = #{birthday,jdbcType=VARCHAR},
             </if>
-            <if test="isThird != null">
-                IS_THIRD = #{isThird,jdbcType=BIT},
+            <if test="nation != null">
+                NATION = #{nation,jdbcType=VARCHAR},
             </if>
-            <if test="isMale != null">
-                IS_MALE = #{isMale,jdbcType=BIT},
+            <if test="registerProvince != null">
+                REGISTER_PROVINCE = #{registerProvince,jdbcType=VARCHAR},
             </if>
-            <if test="isFemale != null">
-                IS_FEMALE = #{isFemale,jdbcType=BIT},
+            <if test="registerCity != null">
+                REGISTER_CITY = #{registerCity,jdbcType=VARCHAR},
             </if>
-            <if test="malePerfect != null">
-                MALE_PERFECT = #{malePerfect,jdbcType=BIT},
+            <if test="liveProvince != null">
+                LIVE_PROVINCE = #{liveProvince,jdbcType=VARCHAR},
             </if>
-            <if test="femalePerfect != null">
-                FEMALE_PERFECT = #{femalePerfect,jdbcType=BIT},
+            <if test="liveCity != null">
+                LIVE_CITY = #{liveCity,jdbcType=VARCHAR},
             </if>
             <if test="createDatetime != null">
                 CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
@@ -291,16 +291,16 @@
         </set>
         where ID = #{id,jdbcType=CHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="org.leesia.entity.Hanzi">
-        update COMMON_HANZI
-        set HANZI = #{hanzi,jdbcType=VARCHAR},
-        IS_NAME = #{isName,jdbcType=BIT},
-        IS_SECOND = #{isSecond,jdbcType=BIT},
-        IS_THIRD = #{isThird,jdbcType=BIT},
-        IS_MALE = #{isMale,jdbcType=BIT},
-        IS_FEMALE = #{isFemale,jdbcType=BIT},
-        MALE_PERFECT = #{malePerfect,jdbcType=BIT},
-        FEMALE_PERFECT = #{femalePerfect,jdbcType=BIT},
+    <update id="updateByPrimaryKey" parameterType="org.leesia.entity.Person">
+        update PERSON
+        set NAME = #{name,jdbcType=VARCHAR},
+        SEX = #{sex,jdbcType=INTEGER},
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+        NATION = #{nation,jdbcType=VARCHAR},
+        REGISTER_PROVINCE = #{registerProvince,jdbcType=VARCHAR},
+        REGISTER_CITY = #{registerCity,jdbcType=VARCHAR},
+        LIVE_PROVINCE = #{liveProvince,jdbcType=VARCHAR},
+        LIVE_CITY = #{liveCity,jdbcType=VARCHAR},
         CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
         UPDATE_DATETIME = #{updateDatetime,jdbcType=TIMESTAMP}
         where ID = #{id,jdbcType=CHAR}
