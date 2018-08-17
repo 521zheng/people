@@ -29,6 +29,10 @@ public class CityResource {
     private CityService cityService;
 
     public CityResource() {
+        CITIES.put("北京市", "北京市");
+        CITIES.put("上海市", "上海市");
+        CITIES.put("天津市", "天津市");
+        CITIES.put("重庆市", "重庆市");
         CITIES.put("安庆市", "安徽省");
         CITIES.put("蚌埠市", "安徽省");
         CITIES.put("巢湖市", "安徽省");

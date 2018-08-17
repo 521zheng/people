@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Auther: leesia
@@ -29,12 +31,64 @@ public class NameCreater {
     @Autowired
     private RedisService redisService;
 
+    public String creater(String lastName, int sex) {
+        HCache hCache = hCache();
+        List<String> names = hCache.getNames();
+        List<String> perfects = (sex == 0 ? hCache.getMalePerfects() : hCache.getFemalePerfects());
+        double random = Math.random();
+        String first = (random < 0.4 ? perfects.get(new Random().nextInt(perfects.size())) : names.get(new Random().nextInt(names.size())));
+        while (lastName.equals(first)) {
+            first = (random < 0.4 ? perfects.get(new Random().nextInt(perfects.size())) : names.get(new Random().nextInt(names.size())));
+        }
+        String second = "";
+        if (random > 0.3) {
+            do {
+                second = names.get(new Random().nextInt(names.size()));
+            } while (lastName.equals(second) || first.equals(second));
+        }
+        random = Math.random();
+        return random > 0.5 ? first + second : second + first;
+    }
+
     private HCache hCache() {
         HCache hCache = (HCache) redisService.getObject(RedisKeyPrefix.NameDistributionPrefix.getPrefix());
         if (hCache != null) {
             return hCache;
         }
         List<Hanzi> hanzis = hanziService.get(new HashMap<>());
+        List<String> hs = new ArrayList<>();
+        List<String> names = new ArrayList<>();
+        List<String> males = new ArrayList<>();
+        List<String> females = new ArrayList<>();
+        List<String> malePerfects = new ArrayList<>();
+        List<String> femalePerfects = new ArrayList<>();
+        for (Hanzi hanzi : hanzis) {
+            hs.add(hanzi.getHanzi());
+            if (hanzi.getIsName() != null && hanzi.getIsName()) {
+                names.add(hanzi.getHanzi());
+            }
+            if (hanzi.getIsMale() != null && hanzi.getIsMale()) {
+                males.add(hanzi.getHanzi());
+            }
+            if (hanzi.getIsFemale() != null && hanzi.getIsFemale()) {
+                females.add(hanzi.getHanzi());
+            }
+            if (hanzi.getMalePerfect() != null && hanzi.getMalePerfect()) {
+                malePerfects.add(hanzi.getHanzi());
+            }
+            if (hanzi.getFemalePerfect() != null && hanzi.getFemalePerfect()) {
+                femalePerfects.add(hanzi.getHanzi());
+            }
+        }
+        hCache = new HCache();
+        hCache.setHanzis(hs);
+        hCache.setNames(names);
+        hCache.setMales(males);
+        hCache.setFemales(females);
+        hCache.setMalePerfects(malePerfects);
+        hCache.setFemalePerfects(femalePerfects);
+        redisService.setObject(RedisKeyPrefix.NameDistributionPrefix.getPrefix(), hCache);
+
         return hCache;
     }
 

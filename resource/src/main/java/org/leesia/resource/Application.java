@@ -1,6 +1,7 @@
 package org.leesia.resource;
 
 import org.leesia.resource.res.*;
+import org.leesia.resource.service.PersonCreateService;
 import org.leesia.resource.util.*;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -57,5 +58,8 @@ public class Application {
 
 //        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
 //        hanziResource.insertAllHanzi();
+
+        PersonCreateService personCreateService = (PersonCreateService) SpringUtil.getBean("personCreateService");
+        personCreateService.createAndSave(1000);
     }
 }
