@@ -25,11 +25,11 @@ public class AgeDistributionResource {
         AgeDistribution d2 = new AgeDistribution();
         d2.setMinAge(16);
         d2.setMaxAge(60);
-        d2.setDistribution(0.649);
+        d2.setDistribution(0.648);
 
         AgeDistribution d3 = new AgeDistribution();
         d3.setMinAge(60);
-        d3.setMaxAge(null);
+        d3.setMaxAge(100);
         d3.setDistribution(0.173);
 
         ageDistributionService.insert(d1);

@@ -1,6 +1,5 @@
 package org.leesia.dataio.service;
 
-import org.leesia.entity.City;
 import org.leesia.entity.Hanzi;
 
 import java.util.List;

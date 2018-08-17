@@ -15,6 +15,9 @@ public enum RedisKeyPrefix {
     LastNameDistributionPrefix("LAST_NAME_DISTRIBUTION", "姓氏分布Key前缀"),
     SexDistributionPrefix("SEX_DISTRIBUTION", "性别分布Key前缀"),
     ProvinceDistributionPrefix("PROVINCE_DISTRIBUTION", "省份人口分布Key前缀"),
+    AgeDistributionPrefix("AGE_DISTRIBUTION", "年龄分布Key前缀"),
+    IdNumberDistributionPrefix("ID_NUMBER_DISTRIBUTION", "身份证前缀分布Key前缀"),
+    NameDistributionPrefix("NAME_DISTRIBUTION", "名字分布Key前缀"),
     ;
 
     private RedisKeyPrefix(String prefix, String desc) {

@@ -6,9 +6,7 @@ import org.leesia.dataio.service.PersonService;
 import org.leesia.entity.City;
 import org.leesia.entity.Person;
 import org.leesia.entity.Province;
-import org.leesia.resource.creater.LastNameCreater;
-import org.leesia.resource.creater.NationCreater;
-import org.leesia.resource.creater.SexCreater;
+import org.leesia.resource.creater.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +31,25 @@ public class PersonController {
     private PersonService personService;
 
     @Autowired
+    private ProvinceCreater provinceCreater;
+
+    @Autowired
+    private CityCreater cityCreater;
+
+    @Autowired
     private LastNameCreater lastNameCreater;
 
     @Autowired
     private SexCreater sexCreater;
 
     @Autowired
+    private BirthdayCreater birthdayCreater;
+
+    @Autowired
     private NationCreater nationCreater;
+
+    @Autowired
+    private IdCreater idCreater;
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
@@ -70,25 +80,32 @@ public class PersonController {
     public Object creater(HttpServletRequest request) {
         logger.info("生成个人信息");
 
-        String lastName = lastNameCreater.creater();
-        int sex = sexCreater.creater();
-        String nation = nationCreater.creater();
+        try {
+            String provinceName = provinceCreater.creater();
+            String cityName = cityCreater.creater(provinceName);
+            String lastName = lastNameCreater.creater();
+            int sex = sexCreater.creater();
+            String birthday = birthdayCreater.creater();
+            String nation = nationCreater.creater();
+            String id = idCreater.creater(provinceName, birthday, sex);
 
-        City city = null;
-        Person person = new Person();
-        person.setId("");
-        person.setName(lastName);
-        person.setSex(sex);
-        person.setBirthday("");
-        person.setNation(nation);
-        person.setRegisterProvince("");
-        person.setRegisterCity("");
-        person.setLiveProvince("");
-        person.setLiveCity("");
-        person.setCreateDatetime(new Date());
-        person.setUpdateDatetime(new Date());
+            Person person = new Person();
+            person.setId(id);
+            person.setName(lastName);
+            person.setSex(sex);
+            person.setBirthday(birthday);
+            person.setNation(nation);
+            person.setRegisterProvince(provinceName);
+            person.setRegisterCity(cityName);
+            person.setLiveProvince("");
+            person.setLiveCity("");
+            person.setCreateDatetime(new Date());
+            person.setUpdateDatetime(new Date());
 
-        return person;
+            return person;
+        } catch (Exception e) {
+            logger.error("生成个人信息异常：{}", e);
+            return null;
+        }
     }
-
 }
