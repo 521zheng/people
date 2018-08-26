@@ -59,7 +59,7 @@ public class Application {
 //        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
 //        hanziResource.insertAllHanzi();
 
-        PersonCreateService personCreateService = (PersonCreateService) SpringUtil.getBean("personCreateService");
-        personCreateService.createAndSave(1000);
+//        PersonCreateService personCreateService = (PersonCreateService) SpringUtil.getBean("personCreateService");
+//        personCreateService.createAndSave(1000);
     }
 }
