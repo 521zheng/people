@@ -26,40 +26,79 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         SpringUtil.setApplicationContext(ctx);
 
-//        ProvinceResource provinceResource = (ProvinceResource) SpringUtil.getBean("provinceResource");
-//        provinceResource.insertAllProvince();
+//        resource();
+    }
 
-//        CityResource cityResource = (CityResource) SpringUtil.getBean("cityResource");
-//        cityResource.insertAllCity();
+    public static void resource() {
+        try {
+            provinceResource();
+            cityResource();
+            ageDistributionResource();
+            sexDistributionResource();
+            idNumberDistributionResource();
+            lastNameResource();
+            lastNameDistributionResource();
+            nationResource();
+            nationDistributionResource();
+            provinceDistributionResource();
+            hanziResource();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-//        AgeDistributionResource ageDistributionResource = (AgeDistributionResource) SpringUtil.getBean("ageDistributionResource");
-//        ageDistributionResource.insertAllAgeDistribution();
+    public static void provinceResource() {
+        ProvinceResource provinceResource = (ProvinceResource) SpringUtil.getBean("provinceResource");
+        provinceResource.insertAllProvince();
+    }
 
-//        SexDistributionResource sexDistributionResource = (SexDistributionResource) SpringUtil.getBean("sexDistributionResource");
-//        sexDistributionResource.insertAllSexDistribution();
+    public static void cityResource() throws Exception {
+        CityResource cityResource = (CityResource) SpringUtil.getBean("cityResource");
+        cityResource.insertAllCity();
+    }
 
-//        IdNumberDistributionResource idNumberDistributionResource = (IdNumberDistributionResource) SpringUtil.getBean("idNumberDistributionResource");
-//        idNumberDistributionResource.insertAllIdNumberDistribution();
+    public static void ageDistributionResource() {
+        AgeDistributionResource ageDistributionResource = (AgeDistributionResource) SpringUtil.getBean("ageDistributionResource");
+        ageDistributionResource.insertAllAgeDistribution();
+    }
 
-//        LastNameResource lastNameResource = (LastNameResource) SpringUtil.getBean("lastNameResource");
-//        lastNameResource.insertAllLastName();
+    public static void sexDistributionResource() {
+        SexDistributionResource sexDistributionResource = (SexDistributionResource) SpringUtil.getBean("sexDistributionResource");
+        sexDistributionResource.insertAllSexDistribution();
+    }
 
-//        LastNameDistributionResource lastNameDistributionResource = (LastNameDistributionResource) SpringUtil.getBean("lastNameDistributionResource");
-//        lastNameDistributionResource.insertAllLastNameDistribution();
+    public static void idNumberDistributionResource() throws Exception {
+        IdNumberDistributionResource idNumberDistributionResource = (IdNumberDistributionResource) SpringUtil.getBean("idNumberDistributionResource");
+        idNumberDistributionResource.insertAllIdNumberDistribution();
+    }
 
-//        NationResource nationResource = (NationResource) SpringUtil.getBean("nationResource");
-//        nationResource.insertAllNation();
+    public static void lastNameResource() {
+        LastNameResource lastNameResource = (LastNameResource) SpringUtil.getBean("lastNameResource");
+        lastNameResource.insertAllLastName();
+    }
 
-//        NationDistributionResource nationDistributionResource = (NationDistributionResource) SpringUtil.getBean("nationDistributionResource");
-//        nationDistributionResource.insertAllNationDistribution();
+    public static void lastNameDistributionResource() throws Exception {
+        LastNameDistributionResource lastNameDistributionResource = (LastNameDistributionResource) SpringUtil.getBean("lastNameDistributionResource");
+        lastNameDistributionResource.insertAllLastNameDistribution();
+    }
 
-//        ProvinceDistributionResource provinceDistributionResource = (ProvinceDistributionResource) SpringUtil.getBean("provinceDistributionResource");
-//        provinceDistributionResource.insertAllProvinceDistribution();
+    public static void nationResource() {
+        NationResource nationResource = (NationResource) SpringUtil.getBean("nationResource");
+        nationResource.insertAllNation();
+    }
 
-//        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
-//        hanziResource.insertAllHanzi();
+    public static void nationDistributionResource() {
+        NationDistributionResource nationDistributionResource = (NationDistributionResource) SpringUtil.getBean("nationDistributionResource");
+        nationDistributionResource.insertAllNationDistribution();
+    }
 
-//        PersonCreateService personCreateService = (PersonCreateService) SpringUtil.getBean("personCreateService");
-//        personCreateService.createAndSave(1000);
+    public static void provinceDistributionResource() throws Exception {
+        ProvinceDistributionResource provinceDistributionResource = (ProvinceDistributionResource) SpringUtil.getBean("provinceDistributionResource");
+        provinceDistributionResource.insertAllProvinceDistribution();
+    }
+
+    public static void hanziResource() throws Exception {
+        HanziResource hanziResource = (HanziResource) SpringUtil.getBean("hanziResource");
+        hanziResource.insertAllHanzi();
     }
 }
