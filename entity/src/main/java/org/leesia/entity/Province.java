@@ -6,7 +6,11 @@ import java.util.Date;
 public class Province implements Serializable {
     private String id;
 
+    private String provinceCode;
+
     private String provinceName;
+
+    private String provinceShortName;
 
     private String capital;
 
@@ -24,12 +28,28 @@ public class Province implements Serializable {
         this.id = id;
     }
 
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
     public String getProvinceName() {
         return provinceName;
     }
 
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
+    }
+
+    public String getProvinceShortName() {
+        return provinceShortName;
+    }
+
+    public void setProvinceShortName(String provinceShortName) {
+        this.provinceShortName = provinceShortName;
     }
 
     public String getCapital() {

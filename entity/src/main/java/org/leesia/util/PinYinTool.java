@@ -129,9 +129,4 @@ public class PinYinTool {
         }
         return pinyin;
     }
-
-    public static void main(String[] args) {
-        PinYinTool pinYinTool = new PinYinTool();
-        System.out.println(pinYinTool.getFirstLettersUp("多发的发独守空房阿道夫打发第三方"));
-    }
 }

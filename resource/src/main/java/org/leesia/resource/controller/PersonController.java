@@ -2,12 +2,15 @@ package org.leesia.resource.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.leesia.dataio.service.PersonService;
+import org.leesia.resource.service.PersonCreateService;
+import org.leesia.resource.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -23,6 +26,9 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private PersonCreateService personCreateService;
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
@@ -61,5 +67,14 @@ public class PersonController {
         params.put("liveCity", liveCity);
 
         return personService.get(params);
+    }
+
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    @ResponseBody
+    public Object create(HttpServletRequest request, @RequestParam int count) {
+        logger.info("生成个人信息：{}", count);
+
+        personCreateService.create(count, 1000);
+        return true;
     }
 }

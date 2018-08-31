@@ -3,6 +3,7 @@
 <mapper namespace="org.leesia.dataio.dao.ext.ExtCityMapper">
     <resultMap id="BaseResultMap" type="org.leesia.entity.City">
         <id column="ID" jdbcType="CHAR" property="id"/>
+        <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode"/>
         <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
         <result column="PROVINCE" jdbcType="CHAR" property="province"/>
         <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
@@ -11,17 +12,18 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        ID, CITY_CODE, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
     </sql>
 
     <insert id="bacthInsert">
         insert into CITY (
-            ID, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
+            ID, CITY_CODE, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
         )
         values
         <foreach collection="list" item="data" separator=",">
             (
                 #{data.id,jdbcType=CHAR},
+                #{data.cityCode,jdbcType=VARCHAR},
                 #{data.cityName,jdbcType=VARCHAR},
                 #{data.province,jdbcType=CHAR},
                 #{data.provinceName,jdbcType=VARCHAR},

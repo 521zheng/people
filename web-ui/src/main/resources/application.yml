@@ -1,0 +1,7 @@
+#Servlet容器配置
+server:
+  port: 8080
+  context-path: /people
+  session:
+    timeout: 1800
+#server.error.path=/error

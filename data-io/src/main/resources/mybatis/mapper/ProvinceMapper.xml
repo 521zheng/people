@@ -3,7 +3,9 @@
 <mapper namespace="org.leesia.dataio.dao.ProvinceMapper">
     <resultMap id="BaseResultMap" type="org.leesia.entity.Province">
         <id column="ID" jdbcType="CHAR" property="id"/>
+        <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode"/>
         <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="PROVINCE_SHORT_NAME" jdbcType="VARCHAR" property="provinceShortName"/>
         <result column="CAPITAL" jdbcType="CHAR" property="capital"/>
         <result column="CAPITAL_NAME" jdbcType="VARCHAR" property="capitalName"/>
         <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
@@ -70,7 +72,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        ID, PROVINCE_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        ID, PROVINCE_CODE, PROVINCE_NAME, PROVINCE_SHORT_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME,
+        UPDATE_DATETIME
     </sql>
     <select id="selectByExample" parameterType="org.leesia.entity.ProvinceCriteria" resultMap="BaseResultMap">
         select
@@ -103,12 +106,12 @@
         </if>
     </delete>
     <insert id="insert" parameterType="org.leesia.entity.Province">
-        insert into PROVINCE (ID, PROVINCE_NAME, CAPITAL,
-        CAPITAL_NAME, CREATE_DATETIME, UPDATE_DATETIME
-        )
-        values (#{id,jdbcType=CHAR}, #{provinceName,jdbcType=VARCHAR}, #{capital,jdbcType=CHAR},
-        #{capitalName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP}
-        )
+        insert into PROVINCE (ID, PROVINCE_CODE, PROVINCE_NAME,
+        PROVINCE_SHORT_NAME, CAPITAL, CAPITAL_NAME,
+        CREATE_DATETIME, UPDATE_DATETIME)
+        values (#{id,jdbcType=CHAR}, #{provinceCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR},
+        #{provinceShortName,jdbcType=VARCHAR}, #{capital,jdbcType=CHAR}, #{capitalName,jdbcType=VARCHAR},
+        #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="org.leesia.entity.Province">
         insert into PROVINCE
@@ -116,8 +119,14 @@
             <if test="id != null">
                 ID,
             </if>
+            <if test="provinceCode != null">
+                PROVINCE_CODE,
+            </if>
             <if test="provinceName != null">
                 PROVINCE_NAME,
+            </if>
+            <if test="provinceShortName != null">
+                PROVINCE_SHORT_NAME,
             </if>
             <if test="capital != null">
                 CAPITAL,
@@ -136,8 +145,14 @@
             <if test="id != null">
                 #{id,jdbcType=CHAR},
             </if>
+            <if test="provinceCode != null">
+                #{provinceCode,jdbcType=VARCHAR},
+            </if>
             <if test="provinceName != null">
                 #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceShortName != null">
+                #{provinceShortName,jdbcType=VARCHAR},
             </if>
             <if test="capital != null">
                 #{capital,jdbcType=CHAR},
@@ -165,8 +180,14 @@
             <if test="record.id != null">
                 ID = #{record.id,jdbcType=CHAR},
             </if>
+            <if test="record.provinceCode != null">
+                PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+            </if>
             <if test="record.provinceName != null">
                 PROVINCE_NAME = #{record.provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.provinceShortName != null">
+                PROVINCE_SHORT_NAME = #{record.provinceShortName,jdbcType=VARCHAR},
             </if>
             <if test="record.capital != null">
                 CAPITAL = #{record.capital,jdbcType=CHAR},
@@ -188,7 +209,9 @@
     <update id="updateByExample" parameterType="map">
         update PROVINCE
         set ID = #{record.id,jdbcType=CHAR},
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
         PROVINCE_NAME = #{record.provinceName,jdbcType=VARCHAR},
+        PROVINCE_SHORT_NAME = #{record.provinceShortName,jdbcType=VARCHAR},
         CAPITAL = #{record.capital,jdbcType=CHAR},
         CAPITAL_NAME = #{record.capitalName,jdbcType=VARCHAR},
         CREATE_DATETIME = #{record.createDatetime,jdbcType=TIMESTAMP},
@@ -200,8 +223,14 @@
     <update id="updateByPrimaryKeySelective" parameterType="org.leesia.entity.Province">
         update PROVINCE
         <set>
+            <if test="provinceCode != null">
+                PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+            </if>
             <if test="provinceName != null">
                 PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceShortName != null">
+                PROVINCE_SHORT_NAME = #{provinceShortName,jdbcType=VARCHAR},
             </if>
             <if test="capital != null">
                 CAPITAL = #{capital,jdbcType=CHAR},
@@ -220,7 +249,9 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="org.leesia.entity.Province">
         update PROVINCE
-        set PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+        set PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+        PROVINCE_SHORT_NAME = #{provinceShortName,jdbcType=VARCHAR},
         CAPITAL = #{capital,jdbcType=CHAR},
         CAPITAL_NAME = #{capitalName,jdbcType=VARCHAR},
         CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},

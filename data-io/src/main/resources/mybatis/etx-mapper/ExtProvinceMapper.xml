@@ -3,7 +3,9 @@
 <mapper namespace="org.leesia.dataio.dao.ext.ExtProvinceMapper">
     <resultMap id="BaseResultMap" type="org.leesia.entity.Province">
         <id column="ID" jdbcType="CHAR" property="id"/>
+        <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode"/>
         <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="PROVINCE_SHORT_NAME" jdbcType="VARCHAR" property="provinceShortName"/>
         <result column="CAPITAL" jdbcType="CHAR" property="capital"/>
         <result column="CAPITAL_NAME" jdbcType="VARCHAR" property="capitalName"/>
         <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime"/>
@@ -11,18 +13,22 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID, PROVINCE_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        ID, PROVINCE_CODE, PROVINCE_NAME, PROVINCE_SHORT_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME,
+        UPDATE_DATETIME
     </sql>
 
     <insert id="bacthInsert">
         insert into PROVINCE (
-            ID, PROVINCE_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME, UPDATE_DATETIME
+            ID, PROVINCE_CODE, PROVINCE_NAME, PROVINCE_SHORT_NAME, CAPITAL, CAPITAL_NAME, CREATE_DATETIME,
+            UPDATE_DATETIME
         )
         values
         <foreach collection="list" item="data" separator=",">
             (
                 #{data.id,jdbcType=CHAR},
+                #{data.provinceCode,jdbcType=VARCHAR},
                 #{data.provinceName,jdbcType=VARCHAR},
+                #{data.provinceShortName,jdbcType=VARCHAR},
                 #{data.capital,jdbcType=CHAR},
                 #{data.capitalName,jdbcType=VARCHAR},
                 #{data.createDatetime,jdbcType=TIMESTAMP},

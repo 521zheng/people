@@ -175,6 +175,76 @@ public class CityCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andCityCodeIsNull() {
+            addCriterion("CITY_CODE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeIsNotNull() {
+            addCriterion("CITY_CODE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeEqualTo(String value) {
+            addCriterion("CITY_CODE =", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeNotEqualTo(String value) {
+            addCriterion("CITY_CODE <>", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeGreaterThan(String value) {
+            addCriterion("CITY_CODE >", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("CITY_CODE >=", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeLessThan(String value) {
+            addCriterion("CITY_CODE <", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeLessThanOrEqualTo(String value) {
+            addCriterion("CITY_CODE <=", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeLike(String value) {
+            addCriterion("CITY_CODE like", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeNotLike(String value) {
+            addCriterion("CITY_CODE not like", value, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeIn(List<String> values) {
+            addCriterion("CITY_CODE in", values, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeNotIn(List<String> values) {
+            addCriterion("CITY_CODE not in", values, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeBetween(String value1, String value2) {
+            addCriterion("CITY_CODE between", value1, value2, "cityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityCodeNotBetween(String value1, String value2) {
+            addCriterion("CITY_CODE not between", value1, value2, "cityCode");
+            return (Criteria) this;
+        }
+
         public Criteria andCityNameIsNull() {
             addCriterion("CITY_NAME is null");
             return (Criteria) this;

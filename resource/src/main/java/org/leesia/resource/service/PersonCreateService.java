@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Auther: leesia
@@ -27,25 +29,38 @@ public class PersonCreateService {
     @Autowired
     private PersonCreater personCreater;
 
-    public void createAndSave(int batchCount) {
+    private ExecutorService executor = Executors.newFixedThreadPool(10);
+
+    private void createAndSave(int total, int batchCount) {
         List<Person> persons = new ArrayList<>();
 
-        while (true) {
+        int count = 0;
+        while (count < total) {
             try {
                 Person person = createPerson();
                 if (person != null) {
                     persons.add(person);
+                    count++;
 
                     if (persons.size() >= batchCount) {
                         personService.batchInsert(persons);
                         persons.clear();
+
+                        logger.info("生成并保存个人信息，已添加：{}", count);
                     }
                 }
 
-                Thread.sleep(100);
+//                Thread.sleep(100);
             } catch (Exception e) {
                 logger.error("生成并保存个人信息失败：" + e);
             }
+        }
+
+        if (persons.size() > 0) {
+            personService.batchInsert(persons);
+            persons.clear();
+
+            logger.info("生成并保存个人信息，已添加：{}", count);
         }
     }
 
@@ -58,5 +73,17 @@ public class PersonCreateService {
             logger.error("生成个人信息异常：" + e);
         }
         return null;
+    }
+
+    private Runnable getCreateThread(final int total, final int batchCount) {
+        return new Runnable() {
+            public void run() {
+                createAndSave(total, batchCount);
+            }
+        };
+    }
+
+    public void create(int total, int batchCount) {
+        executor.execute(getCreateThread(total, batchCount));
     }
 }

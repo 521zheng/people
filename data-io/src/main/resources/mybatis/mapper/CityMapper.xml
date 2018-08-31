@@ -3,6 +3,7 @@
 <mapper namespace="org.leesia.dataio.dao.CityMapper">
     <resultMap id="BaseResultMap" type="org.leesia.entity.City">
         <id column="ID" jdbcType="CHAR" property="id"/>
+        <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode"/>
         <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
         <result column="PROVINCE" jdbcType="CHAR" property="province"/>
         <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
@@ -70,7 +71,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        ID, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
+        ID, CITY_CODE, CITY_NAME, PROVINCE, PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
     </sql>
     <select id="selectByExample" parameterType="org.leesia.entity.CityCriteria" resultMap="BaseResultMap">
         select
@@ -103,18 +104,21 @@
         </if>
     </delete>
     <insert id="insert" parameterType="org.leesia.entity.City">
-        insert into CITY (ID, CITY_NAME, PROVINCE,
-        PROVINCE_NAME, CREATE_DATETIME, UPDATE_DATETIME
-        )
-        values (#{id,jdbcType=CHAR}, #{cityName,jdbcType=VARCHAR}, #{province,jdbcType=CHAR},
-        #{provinceName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP}
-        )
+        insert into CITY (ID, CITY_CODE, CITY_NAME,
+        PROVINCE, PROVINCE_NAME, CREATE_DATETIME,
+        UPDATE_DATETIME)
+        values (#{id,jdbcType=CHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR},
+        #{province,jdbcType=CHAR}, #{provinceName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP},
+        #{updateDatetime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="org.leesia.entity.City">
         insert into CITY
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
+            </if>
+            <if test="cityCode != null">
+                CITY_CODE,
             </if>
             <if test="cityName != null">
                 CITY_NAME,
@@ -135,6 +139,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=CHAR},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
             </if>
             <if test="cityName != null">
                 #{cityName,jdbcType=VARCHAR},
@@ -165,6 +172,9 @@
             <if test="record.id != null">
                 ID = #{record.id,jdbcType=CHAR},
             </if>
+            <if test="record.cityCode != null">
+                CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+            </if>
             <if test="record.cityName != null">
                 CITY_NAME = #{record.cityName,jdbcType=VARCHAR},
             </if>
@@ -188,6 +198,7 @@
     <update id="updateByExample" parameterType="map">
         update CITY
         set ID = #{record.id,jdbcType=CHAR},
+        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
         CITY_NAME = #{record.cityName,jdbcType=VARCHAR},
         PROVINCE = #{record.province,jdbcType=CHAR},
         PROVINCE_NAME = #{record.provinceName,jdbcType=VARCHAR},
@@ -200,6 +211,9 @@
     <update id="updateByPrimaryKeySelective" parameterType="org.leesia.entity.City">
         update CITY
         <set>
+            <if test="cityCode != null">
+                CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+            </if>
             <if test="cityName != null">
                 CITY_NAME = #{cityName,jdbcType=VARCHAR},
             </if>
@@ -220,7 +234,8 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="org.leesia.entity.City">
         update CITY
-        set CITY_NAME = #{cityName,jdbcType=VARCHAR},
+        set CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
         PROVINCE = #{province,jdbcType=CHAR},
         PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
         CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
